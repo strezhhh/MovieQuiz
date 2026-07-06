@@ -72,7 +72,7 @@ final class MovieQuizViewController: UIViewController {
     private var correctAnswers: Int = 0
     private var currentQuestionIndex: Int = 0
     private var uncorrectAnswers: Int = 0
-
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -95,6 +95,12 @@ final class MovieQuizViewController: UIViewController {
       let image: UIImage
       let question: String
       let questionNumber: String
+    }
+    
+    struct QuizResultsViewModel {
+      let title: String
+      let text: String
+      let buttonText: String
     }
     
     
@@ -137,6 +143,9 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showAnswerResult(isCorrect: Bool) {
+        if isCorrect {
+            correctAnswers += 1
+        }
         showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
         self.showNextQuestionOrResults()
@@ -145,7 +154,12 @@ final class MovieQuizViewController: UIViewController {
     
     private func showNextQuestionOrResults() {
       if currentQuestionIndex == questions.count - 1 {
-          // допишем потом
+        let quizResults = QuizResultsViewModel (
+              title: "Этот раунд окончен!",
+              text: "Ваш результат: \(correctAnswers)/\(questions.count)",
+              buttonText: "Сыграть еще раз"
+            )
+          show(quiz: quizResults)
       } else {
         currentQuestionIndex += 1
           let nextQuestion = convert(model: questions[currentQuestionIndex])
@@ -153,6 +167,30 @@ final class MovieQuizViewController: UIViewController {
           hideBorder()
       }
     }
+    private func show(quiz result: QuizResultsViewModel) {
+        let alert = UIAlertController(
+            title: result.title,
+            message: result.text,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(
+            title: result.buttonText,
+            style: .default
+        ) { _ in
+            self.currentQuestionIndex = 0
+            self.correctAnswers = 0
+            let newQuestion = self.convert(model: self.questions[self.currentQuestionIndex])
+            self.show(quiz: newQuestion)
+            self.hideBorder()
+            // self.showNextQuestionOrResults()
+
+        }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
     
 }
 
