@@ -128,9 +128,30 @@ final class MovieQuizViewController: UIViewController {
         previewImageView.layer.borderColor = color
         previewImageView.layer.cornerRadius = 20
     }
+
+    private func hideBorder() {
+        previewImageView.layer.masksToBounds = true
+        previewImageView.layer.borderWidth = 0
+        previewImageView.layer.borderColor = UIColor.ypBlack.cgColor
+        previewImageView.layer.cornerRadius = 0
+    }
     
     private func showAnswerResult(isCorrect: Bool) {
-            showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
+        showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        self.showNextQuestionOrResults()
+        }
+    }
+    
+    private func showNextQuestionOrResults() {
+      if currentQuestionIndex == questions.count - 1 {
+          // допишем потом
+      } else {
+        currentQuestionIndex += 1
+          let nextQuestion = convert(model: questions[currentQuestionIndex])
+          show(quiz: nextQuestion)
+          hideBorder()
+      }
     }
     
 }
