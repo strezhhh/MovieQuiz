@@ -122,20 +122,15 @@ final class MovieQuizViewController: UIViewController {
         questionLabel.text = step.question
     }
     
-    private func showBorder(color: CGColor) {
+    private func showBorder(_ color: CGColor) {
         previewImageView.layer.masksToBounds = true
-        previewImageView.layer.borderWidth = 1
+        previewImageView.layer.borderWidth = 8
         previewImageView.layer.borderColor = color
-        previewImageView.layer.cornerRadius = 6
+        previewImageView.layer.cornerRadius = 20
     }
     
     private func showAnswerResult(isCorrect: Bool) {
-        if isCorrect == true {
-            showBorder(color: UIColor.green.cgColor)
-        } else {
-            showBorder(color: UIColor.red.cgColor)
-        }
-//        currentQuestionIndex += 1
+            showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
     }
     
 }
