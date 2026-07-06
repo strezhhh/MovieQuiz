@@ -12,8 +12,16 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction private func didTapYesButton(_ sender: Any) {
+        let currentQuestions = questions[currentQuestionIndex]
+        if currentQuestions.correctAnswer == true {
+            showAnswerResult(isCorrect: true)
+        } else {
+            showAnswerResult(isCorrect: false)
+        }
     }
     @IBAction private func didTapNoButton(_ sender: Any) {
+        let currentQuestions = questions[currentQuestionIndex]
+        showAnswerResult(isCorrect: currentQuestions.correctAnswer == false)
     }
     
     // MARK: - Properties
@@ -92,7 +100,7 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Private Methods
     
-    fileprivate func setupUI() {
+    private func setupUI() {
         questionLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
         questionTitleLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
         questionTitleLabel.text = "Вопрос"
@@ -114,6 +122,21 @@ final class MovieQuizViewController: UIViewController {
         questionLabel.text = step.question
     }
     
+    private func showBorder(color: CGColor) {
+        previewImageView.layer.masksToBounds = true
+        previewImageView.layer.borderWidth = 1
+        previewImageView.layer.borderColor = color
+        previewImageView.layer.cornerRadius = 6
+    }
+    
+    private func showAnswerResult(isCorrect: Bool) {
+        if isCorrect == true {
+            showBorder(color: UIColor.green.cgColor)
+        } else {
+            showBorder(color: UIColor.red.cgColor)
+        }
+//        currentQuestionIndex += 1
+    }
     
 }
 
