@@ -3,7 +3,7 @@ import UIKit
 final class MovieQuizViewController: UIViewController {
     
     // MARK: - IBOutlets
-
+    
     @IBOutlet private weak var questionTitleLabel: UILabel!
     @IBOutlet private weak var indexLabel: UILabel!
     @IBOutlet private weak var questionLabel: UILabel!
@@ -87,7 +87,7 @@ final class MovieQuizViewController: UIViewController {
         let currentQuestion = questions[currentQuestionIndex]
         show(quiz: convert(model: currentQuestion))
     }
-   
+    
     // MARK: - Private Structures
     
     // Стуктура вопроса
@@ -99,16 +99,16 @@ final class MovieQuizViewController: UIViewController {
     
     // Вью модель для состояния "Вопрос показан"
     struct QuizStepViewModel {
-      let image: UIImage
-      let question: String
-      let questionNumber: String
+        let image: UIImage
+        let question: String
+        let questionNumber: String
     }
     
     // Стурктура результатов квиза
     struct QuizResultsViewModel {
-      let title: String
-      let text: String
-      let buttonText: String
+        let title: String
+        let text: String
+        let buttonText: String
     }
     
     // MARK: - Private Methods
@@ -130,7 +130,7 @@ final class MovieQuizViewController: UIViewController {
         )
         return questionStep
     }
-   
+    
     // Метод отображения информации на экране
     private func show(quiz step: QuizStepViewModel) {
         indexLabel.text = "\(step.questionNumber)"
@@ -161,25 +161,25 @@ final class MovieQuizViewController: UIViewController {
         }
         showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-        self.showNextQuestionOrResults()
+            self.showNextQuestionOrResults()
         }
     }
     
     // Метод либо ведет на экран результатов либо на следующий вопрос
     private func showNextQuestionOrResults() {
-      if currentQuestionIndex == questions.count - 1 {
-        let quizResults = QuizResultsViewModel (
-              title: "Этот раунд окончен!",
-              text: "Ваш результат: \(correctAnswers)/\(questions.count)",
-              buttonText: "Сыграть еще раз"
+        if currentQuestionIndex == questions.count - 1 {
+            let quizResults = QuizResultsViewModel (
+                title: "Этот раунд окончен!",
+                text: "Ваш результат: \(correctAnswers)/\(questions.count)",
+                buttonText: "Сыграть еще раз"
             )
-          show(quiz: quizResults)
-      } else {
-        currentQuestionIndex += 1
-          let nextQuestion = convert(model: questions[currentQuestionIndex])
-          show(quiz: nextQuestion)
-          hideBorder()
-      }
+            show(quiz: quizResults)
+        } else {
+            currentQuestionIndex += 1
+            let nextQuestion = convert(model: questions[currentQuestionIndex])
+            show(quiz: nextQuestion)
+            hideBorder()
+        }
     }
     
     // Метод формирует алерту с результатами квиза
@@ -198,10 +198,10 @@ final class MovieQuizViewController: UIViewController {
             let newQuestion = self.convert(model: self.questions[self.currentQuestionIndex])
             self.show(quiz: newQuestion)
             self.hideBorder()
-
+            
         }
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
-
+    
 }
