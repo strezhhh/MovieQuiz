@@ -118,9 +118,11 @@
                     </view>
                     <connections>
                         <outlet property="indexLabel" destination="uUf-zl-S6Z" id="F5d-EU-k0c"/>
+                        <outlet property="noButton" destination="hjL-AW-Gqu" id="hSL-iV-L65"/>
                         <outlet property="previewImageView" destination="YjD-fR-eBG" id="DVC-HR-aup"/>
                         <outlet property="questionLabel" destination="rqJ-bt-Qqh" id="ZrG-PH-7H2"/>
                         <outlet property="questionTitleLabel" destination="R6E-f9-ugK" id="Jhm-Qm-HGR"/>
+                        <outlet property="yesButton" destination="6jN-ly-jY6" id="qtW-FD-0If"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

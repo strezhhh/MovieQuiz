@@ -9,12 +9,15 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var questionLabel: UILabel!
     @IBOutlet private weak var previewImageView: UIImageView!
     
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var yesButton: UIButton!
+    
     // MARK: - IBActions
     
     // Метод вызывается когда юзер нажимает кнопку "Да"
     @IBAction private func didTapYesButton(_ sender: Any) {
         let currentQuestions = questions[currentQuestionIndex]
-            showAnswerResult(isCorrect: currentQuestions.correctAnswer == true)
+        showAnswerResult(isCorrect: currentQuestions.correctAnswer == true)
     }
     
     // Метод вызывается когда юзер нажимает кнопку "Нет"
@@ -131,6 +134,7 @@ final class MovieQuizViewController: UIViewController {
         indexLabel.text = "\(step.questionNumber)"
         previewImageView.image = step.image
         questionLabel.text = step.question
+        setButtonsIsEnabled(to: true)
     }
     
     // Метод показывает обводку. Вызывается в методе showAnswerResult()
@@ -155,9 +159,16 @@ final class MovieQuizViewController: UIViewController {
             correctAnswers += 1
         }
         showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
+        setButtonsIsEnabled(to: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResults()
         }
+    }
+    
+    // Метод включает или выключает кнопки "Нет" и "Да"
+    private func setButtonsIsEnabled(to newStatus: Bool) {
+        noButton.isEnabled = newStatus
+        yesButton.isEnabled = newStatus
     }
     
     // Метод либо ведет на экран результатов либо на следующий вопрос
