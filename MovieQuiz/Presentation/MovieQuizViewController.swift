@@ -11,6 +11,7 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - IBActions
     
+    // Метод вызывается когда юзер нажимает кнопку "Да"
     @IBAction private func didTapYesButton(_ sender: Any) {
         let currentQuestions = questions[currentQuestionIndex]
         if currentQuestions.correctAnswer == true {
@@ -19,6 +20,8 @@ final class MovieQuizViewController: UIViewController {
             showAnswerResult(isCorrect: false)
         }
     }
+    
+    // Метод вызывается когда юзер нажимает кнопку "Нет"
     @IBAction private func didTapNoButton(_ sender: Any) {
         let currentQuestions = questions[currentQuestionIndex]
         showAnswerResult(isCorrect: currentQuestions.correctAnswer == false)
@@ -26,6 +29,7 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Properties
     
+    // Массив моковых вопросов
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
@@ -69,7 +73,10 @@ final class MovieQuizViewController: UIViewController {
             correctAnswer: false)
     ]
     
+    // Переменная с количеством верных ответов
     private var correctAnswers: Int = 0
+    
+    // Переменная с индексом текущего вопроса
     private var currentQuestionIndex: Int = 0
     
     // MARK: - Lifecycle
@@ -83,18 +90,21 @@ final class MovieQuizViewController: UIViewController {
    
     // MARK: - Private Structures
     
+    // Стуктура вопроса
     struct QuizQuestion {
         let image: String
         let text: String
         let correctAnswer: Bool
     }
     
+    // Вью модель для состояния "Вопрос показан"
     struct QuizStepViewModel {
       let image: UIImage
       let question: String
       let questionNumber: String
     }
     
+    // Стурктура результатов квиза
     struct QuizResultsViewModel {
       let title: String
       let text: String
@@ -103,6 +113,7 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Private Methods
     
+    // Метод инициализации Label
     private func setupUI() {
         questionLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
         questionTitleLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
@@ -110,6 +121,7 @@ final class MovieQuizViewController: UIViewController {
         indexLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
     }
     
+    // Метод конвертации из структуры вопроса в во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
@@ -119,19 +131,22 @@ final class MovieQuizViewController: UIViewController {
         return questionStep
     }
    
+    // Метод отображения информации на экране
     private func show(quiz step: QuizStepViewModel) {
         indexLabel.text = "\(step.questionNumber)"
         previewImageView.image = step.image
         questionLabel.text = step.question
     }
     
+    // Метод показывает обводку. Вызывается в методе showAnswerResult()
     private func showBorder(_ color: CGColor) {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 8
         previewImageView.layer.borderColor = color
         previewImageView.layer.cornerRadius = 20
     }
-
+    
+    // Метод скрывает обводку. Вызывается в методе showNextQuestionOrResults()
     private func hideBorder() {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 0
@@ -139,6 +154,7 @@ final class MovieQuizViewController: UIViewController {
         previewImageView.layer.cornerRadius = 0
     }
     
+    // Метод отображения корректности ответа
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
@@ -149,6 +165,7 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
+    // Метод либо ведет на экран результатов либо на следующий вопрос
     private func showNextQuestionOrResults() {
       if currentQuestionIndex == questions.count - 1 {
         let quizResults = QuizResultsViewModel (
@@ -165,6 +182,7 @@ final class MovieQuizViewController: UIViewController {
       }
     }
     
+    // Метод формирует алерту с результатами квиза
     private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
             title: result.title,
