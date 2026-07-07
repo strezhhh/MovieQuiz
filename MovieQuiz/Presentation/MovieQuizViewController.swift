@@ -118,6 +118,7 @@ final class MovieQuizViewController: UIViewController {
         questionTitleLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
         questionTitleLabel.text = "Вопрос"
         indexLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        previewImageView.layer.cornerRadius = 20
     }
     
     // Метод конвертации из структуры вопроса в во вью модель
@@ -142,7 +143,6 @@ final class MovieQuizViewController: UIViewController {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 8
         previewImageView.layer.borderColor = color
-        previewImageView.layer.cornerRadius = 20
     }
     
     // Метод скрывает обводку. Вызывается в методе showNextQuestionOrResults()
@@ -150,7 +150,6 @@ final class MovieQuizViewController: UIViewController {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 0
         previewImageView.layer.borderColor = UIColor.ypBlack.cgColor
-        previewImageView.layer.cornerRadius = 0
     }
     
     // Метод отображения корректности ответа
