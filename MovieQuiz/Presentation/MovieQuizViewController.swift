@@ -14,11 +14,7 @@ final class MovieQuizViewController: UIViewController {
     // Метод вызывается когда юзер нажимает кнопку "Да"
     @IBAction private func didTapYesButton(_ sender: Any) {
         let currentQuestions = questions[currentQuestionIndex]
-        if currentQuestions.correctAnswer == true {
-            showAnswerResult(isCorrect: true)
-        } else {
-            showAnswerResult(isCorrect: false)
-        }
+            showAnswerResult(isCorrect: currentQuestions.correctAnswer == true)
     }
     
     // Метод вызывается когда юзер нажимает кнопку "Нет"
