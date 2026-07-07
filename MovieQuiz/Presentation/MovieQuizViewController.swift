@@ -123,12 +123,11 @@ final class MovieQuizViewController: UIViewController {
     
     // Метод конвертации из структуры вопроса в во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        let questionStep = QuizStepViewModel(
+        QuizStepViewModel(
             image: UIImage(named: model.imageName) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)"
         )
-        return questionStep
     }
     
     // Метод отображения информации на экране
