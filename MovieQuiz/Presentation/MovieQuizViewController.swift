@@ -159,7 +159,8 @@ final class MovieQuizViewController: UIViewController {
         }
         showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
         setButtonsIsEnabled(to: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
             self.showNextQuestionOrResults()
         }
     }
@@ -197,7 +198,8 @@ final class MovieQuizViewController: UIViewController {
         let action = UIAlertAction(
             title: result.buttonText,
             style: .default
-        ) { _ in
+        ) { [weak self] _ in // это слабая ссылка на self
+            guard let self = self else { return } // разворачиваем self
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
             let newQuestion = self.convert(model: self.questions[self.currentQuestionIndex])
