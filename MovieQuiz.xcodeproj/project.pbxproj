@@ -10,6 +10,9 @@
 		A91727C72FF68CCD00AECFA7 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A91727C52FF68CCD00AECFA7 /* YS Display-Bold.ttf */; };
 		A91727C82FF68CCD00AECFA7 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A91727C62FF68CCD00AECFA7 /* YS Display-Medium.ttf */; };
 		A98EB79E300C2F7F00E6F85F /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98EB79D300C2F7F00E6F85F /* QuestionFactory.swift */; };
+		A98EB7A0300C365800E6F85F /* QuizStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98EB79F300C365800E6F85F /* QuizStepViewModel.swift */; };
+		A98EB7A2300C366500E6F85F /* QuizResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98EB7A1300C366500E6F85F /* QuizResultsViewModel.swift */; };
+		A98EB7A4300C367100E6F85F /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98EB7A3300C367100E6F85F /* QuizQuestion.swift */; };
 		AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB12831907B00B3E448 /* AppDelegate.swift */; };
 		AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */; };
 		AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */; };
@@ -25,6 +28,9 @@
 		A91727C52FF68CCD00AECFA7 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		A91727C62FF68CCD00AECFA7 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		A98EB79D300C2F7F00E6F85F /* QuestionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
+		A98EB79F300C365800E6F85F /* QuizStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStepViewModel.swift; sourceTree = "<group>"; };
+		A98EB7A1300C366500E6F85F /* QuizResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultsViewModel.swift; sourceTree = "<group>"; };
+		A98EB7A3300C367100E6F85F /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		AD1ABAAE2831907B00B3E448 /* MovieQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1ABAB12831907B00B3E448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +58,9 @@
 		611342392B701CF6003FC2A4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A98EB79F300C365800E6F85F /* QuizStepViewModel.swift */,
+				A98EB7A1300C366500E6F85F /* QuizResultsViewModel.swift */,
+				A98EB7A3300C367100E6F85F /* QuizQuestion.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,9 +219,12 @@
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
+				A98EB7A0300C365800E6F85F /* QuizStepViewModel.swift in Sources */,
+				A98EB7A4300C367100E6F85F /* QuizQuestion.swift in Sources */,
 				A98EB79E300C2F7F00E6F85F /* QuestionFactory.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
+				A98EB7A2300C366500E6F85F /* QuizResultsViewModel.swift in Sources */,
 				AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
