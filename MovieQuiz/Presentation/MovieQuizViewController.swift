@@ -16,14 +16,20 @@ final class MovieQuizViewController: UIViewController {
     
     // Метод вызывается когда юзер нажимает кнопку "Да"
     @IBAction private func didTapYesButton(_ sender: Any) {
-        let currentQuestions = questions[currentQuestionIndex]
-        showAnswerResult(isCorrect: currentQuestions.correctAnswer == true)
+        guard let currentQuestions = currentQuestion else {
+            return
+        }
+        let givenAnswer: Bool = true
+        showAnswerResult(isCorrect: givenAnswer == currentQuestions.correctAnswer)
     }
     
     // Метод вызывается когда юзер нажимает кнопку "Нет"
     @IBAction private func didTapNoButton(_ sender: Any) {
-        let currentQuestions = questions[currentQuestionIndex]
-        showAnswerResult(isCorrect: currentQuestions.correctAnswer == false)
+        guard let currentQuestions = currentQuestion else {
+            return
+        }
+        let givenAnswer: Bool = false
+        showAnswerResult(isCorrect: givenAnswer == currentQuestions.correctAnswer)
     }
     
     // MARK: - Properties
@@ -34,13 +40,28 @@ final class MovieQuizViewController: UIViewController {
     // Переменная с индексом текущего вопроса
     private var currentQuestionIndex: Int = 0
     
+    // Общее количество вопросов для квиза
+    private let questionsAmount: Int = 10
+    
+    // Фабрика вопросов в которую будет обращаться Контролер
+    private var questionFactory: QuestionFactory = QuestionFactory()
+    
+    // Вопрос который видит пользователь
+    private var currentQuestion: QuizQuestion? = nil
+    
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        let currentQuestion = questions[currentQuestionIndex]
-        show(quiz: convert(model: currentQuestion))
+        if let firstQuestion = questionFactory.requestNextQuestion() {
+            currentQuestion = firstQuestion
+            show(quiz: convert(model: currentQuestion!))
+        }
+//  старый код
+//        let currentQuestion = questions[currentQuestionIndex]
+//        show(quiz: convert(model: currentQuestion))
     }
     
     
@@ -60,7 +81,7 @@ final class MovieQuizViewController: UIViewController {
         QuizStepViewModel(
             image: UIImage(named: model.imageName) ?? UIImage(),
             question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)"
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
         )
     }
     
@@ -107,16 +128,18 @@ final class MovieQuizViewController: UIViewController {
     
     // Метод либо ведет на экран результатов либо на следующий вопрос
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questions.count - 1 {
+        if currentQuestionIndex == questionsAmount - 1 {
             let quizResults = QuizResultsViewModel (
                 title: "Этот раунд окончен!",
-                text: "Ваш результат: \(correctAnswers)/\(questions.count)",
+                text: "Ваш результат: \(correctAnswers)/\(questionsAmount)",
                 buttonText: "Сыграть еще раз"
             )
             show(quiz: quizResults)
         } else {
             currentQuestionIndex += 1
-            let nextQuestion = convert(model: questions[currentQuestionIndex])
+            guard let convertNextQuestion = questionFactory.requestNextQuestion() else { return }
+            let nextQuestion = convert(model: convertNextQuestion )
+            // let nextQuestion = convert(model: currentQuestion[currentQuestionIndex])
             show(quiz: nextQuestion)
             hideBorder()
         }
@@ -136,7 +159,9 @@ final class MovieQuizViewController: UIViewController {
             guard let self = self else { return } // разворачиваем self
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
-            let newQuestion = self.convert(model: self.questions[self.currentQuestionIndex])
+            guard let convertNextQuestion = questionFactory.requestNextQuestion() else { return }
+            let newQuestion = convert(model: convertNextQuestion )
+            // let newQuestion = self.convert(model: self.questions[self.currentQuestionIndex])
             self.show(quiz: newQuestion)
             self.hideBorder()
             

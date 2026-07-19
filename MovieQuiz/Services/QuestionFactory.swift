@@ -8,8 +8,7 @@
 import Foundation
 
 // Тут храниться массив с вопросами и один метод, который возвращает случайно выбранный вопрос
-class QuestionFactory {
-    
+class QuestionFactory { //QuestionFactoryProtocol {
     // Массив моковых вопросов
     private let questions: [QuizQuestion] = [
         QuizQuestion(
@@ -59,7 +58,7 @@ class QuestionFactory {
         guard let index = (0..<questions.count).randomElement() else {
             return nil
         }
-        
         return questions[safe: index]
     }
 }
+

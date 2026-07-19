@@ -8,7 +8,7 @@
 import Foundation
 
 // Структура вопроса
-private struct QuizQuestion {
+struct QuizQuestion {
     let imageName: String
     let text: String
     let correctAnswer: Bool
