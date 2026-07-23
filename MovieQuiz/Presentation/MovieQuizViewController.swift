@@ -40,7 +40,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // Переменная с индексом текущего вопроса
     private var currentQuestionIndex: Int = 0
     
-    // Общее количество вопросов для квиза
+    // Общее количество вопросов для Квиза
     private let questionsAmount: Int = 10
     
     // Фабрика вопросов в которую будет обращаться Контролер
@@ -60,17 +60,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     // MARK: - QuestionFactoryDelegate
 
+    // Метод, который вызовет Фабрика, чтобы отдать готовый вопрос
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
         }
-
         currentQuestion = question
         let viewModel = convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
-        
     }
     
     

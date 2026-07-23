@@ -59,6 +59,7 @@ class QuestionFactory: QuestionFactoryProtocol {
     
     // MARK: - Methods
 
+    // Метод генерации следующего мокового вопроса
     func requestNextQuestion() {
         // рандомно выбираем один из вопросов
         guard let index = (0..<questions.count).randomElement() else {
@@ -69,6 +70,7 @@ class QuestionFactory: QuestionFactoryProtocol {
         delegate?.didReceiveNextQuestion(question: questions)
     }
     
+    // Метод инициализации делегата
     func didSetDelegate(_ delegate: QuestionFactoryDelegate?) {
         self.delegate = delegate
     }
