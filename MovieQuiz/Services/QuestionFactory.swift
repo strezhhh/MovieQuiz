@@ -69,7 +69,10 @@ class QuestionFactory: QuestionFactoryProtocol {
         delegate?.didReceiveNextQuestion(question: questions)
     }
     
-
+    func didSetDelegate(_ delegate: QuestionFactoryDelegate?) {
+        self.delegate = delegate
+    }
+    
     
 }
 
