@@ -8,7 +8,7 @@
 import Foundation
 
 // Тут храниться массив с вопросами и один метод, который возвращает случайно выбранный вопрос
-class QuestionFactory { //QuestionFactoryProtocol {
+class QuestionFactory: QuestionFactoryProtocol {
     // Массив моковых вопросов
     private let questions: [QuizQuestion] = [
         QuizQuestion(
@@ -53,12 +53,23 @@ class QuestionFactory { //QuestionFactoryProtocol {
             correctAnswer: false)
     ]
     
-    func requestNextQuestion() -> QuizQuestion? {
+    // MARK: - Delegates
+    
+    weak var delegate: QuestionFactoryDelegate?
+    
+    // MARK: - Methods
+
+    func requestNextQuestion() {
         // рандомно выбираем один из вопросов
         guard let index = (0..<questions.count).randomElement() else {
-            return nil
+            delegate?.didReceiveNextQuestion(question: nil)
+            return
         }
-        return questions[safe: index]
+        let questions = questions[safe: index]
+        delegate?.didReceiveNextQuestion(question: questions)
     }
+    
+
+    
 }
 
