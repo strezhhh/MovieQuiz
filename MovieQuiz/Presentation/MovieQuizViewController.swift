@@ -60,7 +60,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     // MARK: - QuestionFactoryDelegate
 
-    // Метод, который вызовет Фабрика, чтобы отдать готовый вопрос
+    // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
