@@ -55,18 +55,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        let questionFactory = QuestionFactory()
-        questionFactory.didSetDelegate(self)
-        self.questionFactory = questionFactory
-        questionFactory.requestNextQuestion()
-        if let firstQuestion = currentQuestion {
-            //currentQuestion = firstQuestion
-            show(quiz: convert(model: firstQuestion))
-        }
-//        if let firstQuestion = questionFactory.requestNextQuestion() {
-//            currentQuestion = firstQuestion
-//            show(quiz: convert(model: currentQuestion!))
-//        }
+        setupQuestionFactory()
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -94,6 +83,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         questionTitleLabel.text = "Вопрос"
         indexLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
         previewImageView.layer.cornerRadius = 20
+    }
+    
+    // Метод инициализации фабрики вопросов и установки делегата
+    private func setupQuestionFactory() {
+        let questionFactory = QuestionFactory()
+        questionFactory.didSetDelegate(self)
+        self.questionFactory = questionFactory
+        questionFactory.requestNextQuestion()
+        if let firstQuestion = currentQuestion {
+            //currentQuestion = firstQuestion
+            show(quiz: convert(model: firstQuestion))
+        }
     }
     
     // Метод конвертации из структуры вопроса в во вью модель
