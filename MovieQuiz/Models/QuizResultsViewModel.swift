@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Стурктура результатов квиза
+// Структура результатов Квиза
 struct QuizResultsViewModel {
     let title: String
     let text: String

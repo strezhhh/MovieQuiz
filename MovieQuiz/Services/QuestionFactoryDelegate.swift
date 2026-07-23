@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Класс реализующий этот протокол может быть Делегатом у QuestionFactory
 protocol QuestionFactoryDelegate: AnyObject {
     func didReceiveNextQuestion(question: QuizQuestion?)
 }
