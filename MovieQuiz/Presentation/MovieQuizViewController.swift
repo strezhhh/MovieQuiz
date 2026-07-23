@@ -158,10 +158,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         } else {
             currentQuestionIndex += 1
             questionFactory?.requestNextQuestion()
-            guard let convertNextQuestion = currentQuestion else { return }
-            let nextQuestion = convert(model: convertNextQuestion )
-            // let nextQuestion = convert(model: currentQuestion[currentQuestionIndex])
-            show(quiz: nextQuestion)
             hideBorder()
         }
     }
@@ -181,10 +177,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
             questionFactory?.requestNextQuestion()
-            guard let convertNextQuestion = currentQuestion else { return }
-            let newQuestion = convert(model: convertNextQuestion )
-            // let newQuestion = self.convert(model: self.questions[self.currentQuestionIndex])
-            self.show(quiz: newQuestion)
             self.hideBorder()
             
         }
