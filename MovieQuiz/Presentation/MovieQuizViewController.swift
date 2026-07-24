@@ -47,7 +47,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private var questionFactory: QuestionFactoryProtocol?
     
     // Вопрос который видит пользователь
-    private var currentQuestion: QuizQuestion? = nil
+    private var currentQuestion: QuizQuestion?
+    
+    // Алерта, куда Контролер передаст данные с результатами Квиза.
+    private var alertPresenter: AlertModelProtocol?
     
     
     // MARK: - Lifecycle
@@ -72,6 +75,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
     }
     
+    // MARK: - AlertPresenterDelegate
+    
+    // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
+    // и юзер нажал кнопку "Сыграть еще раз"
+    func didShowAlert() {
+        
+    }
     
     // MARK: - Private Methods
     
@@ -91,12 +101,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         self.questionFactory = questionFactory
         questionFactory.requestNextQuestion()
         if let firstQuestion = currentQuestion {
-            //currentQuestion = firstQuestion
             show(quiz: convert(model: firstQuestion))
         }
     }
     
-    // Метод конвертации из структуры вопроса в во вью модель
+    // Метод установки делегата для AlertPresenter
+    private func setupAlertPresenter() {
+        let alertPresenter = AlertPresenter()
+        alertPresenter.didSetDelegateForAlertPresenter(self)
+    }
+    
+    // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         QuizStepViewModel(
             image: UIImage(named: model.imageName) ?? UIImage(),
@@ -146,44 +161,59 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         yesButton.isEnabled = newStatus
     }
     
+    // Метод вызывается, когда нужно показать следующий вопрос
+    private func calledWhenNextQuestion() {
+        currentQuestionIndex += 1
+        questionFactory?.requestNextQuestion()
+        hideBorder()
+    }
+    
+    // Метод вызывается, когда нужно показать Результат
+    private func calledWhenResults () {
+        let showAlert: AlertModelProtocol?
+        guard let showAlert else { return }
+        showAlert.didSetDelegateForAlertPresenter(self)
+        let alertModel = AlertModel (
+            title: "Этот раунд окончен!",
+            message: "Ваш результат: \(correctAnswers)/\(questionsAmount)",
+            buttonText: "Сыграть еще раз",
+            completion: nil
+        )
+        showAlert(quizResult: alertModel)
+//            didShowAlert()
+    }
+    
     // Метод либо ведет на экран результатов либо на следующий вопрос
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
-            let quizResults = QuizResultsViewModel (
-                title: "Этот раунд окончен!",
-                text: "Ваш результат: \(correctAnswers)/\(questionsAmount)",
-                buttonText: "Сыграть еще раз"
-            )
-            show(quiz: quizResults)
+            calledWhenResults()
         } else {
-            currentQuestionIndex += 1
-            questionFactory?.requestNextQuestion()
-            hideBorder()
+            calledWhenNextQuestion()
         }
     }
     
-    // Метод формирует алерту с результатами квиза
+    // Старый метод формирующий алерту с результатами квиза
     private func show(quiz result: QuizResultsViewModel) {
-        let alert = UIAlertController(
-            title: result.title,
-            message: result.text,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(
-            title: result.buttonText,
-            style: .default
-        ) { [weak self] _ in // это слабая ссылка на self
-            guard let self = self else { return } // разворачиваем self
-            self.currentQuestionIndex = 0
-            self.correctAnswers = 0
-            questionFactory?.requestNextQuestion()
-            self.hideBorder()
-            
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(
+//            title: result.title,
+//            message: result.text,
+//            preferredStyle: .alert
+//        )
+//        let action = UIAlertAction(
+//            title: result.buttonText,
+//            style: .default
+//        ) { [weak self] _ in // это слабая ссылка на self
+//            guard let self = self else { return } // разворачиваем self
+//            self.currentQuestionIndex = 0
+//            self.correctAnswers = 0
+//            questionFactory?.requestNextQuestion()
+//            self.hideBorder()
+//            
+//        }
+//        alert.addAction(action)
+//        self.present(alert, animated: true, completion: nil)
     }
-    
+        
     /*
      Задача Sprint_05
      -- В классе MovieQuizViewController есть метод show(quiz result: QuizResultsViewModel). Он отвечает за отображение алерта с результатами квиза после прохождения всех вопросов.
@@ -201,6 +231,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
      По нажатию на кнопку алерта контроллер должен обновить состояние и запустить игру заново.
      
      т.е. Контролер формирует данные с результатами Квиза, передает их в AlertPresenter, а AlertPresenter с новой логикой ТОЛЬКО отображает их!
+     
+     Мне нужно:
+     0 -- Инициализируем делегата для AlertPresenter тогда когда Квиз подошел к концу или в начале? В начале
+     1 -- Контролер формирует данные для Алерты согласно AlertModel
+     1 -- Контролер в showNextQuestionOrResults формирует данные в структуре QuizResultsViewModel и нужно их конвертировать в структуру данных AlertModel для Алерты и передает их в метод АлертПрезентора
+     2 -- Контролер вызывает метод отображения Алерты у Делегатора
+     3 -- Делегатор принимает данные у Контролера и отображает Алерту
+     4 -- Юзер нажимает кнопку "Сыграть еще раз"
+     5 -- Делегатор сообщает об этом Делегату-Контролеру
+     6 -- Контролер показывает первый вопрос
+     
      
      */
 }

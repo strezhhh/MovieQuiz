@@ -9,8 +9,8 @@ import UIKit
 
 // Структура данных для Алерты с результатами Квиза.
 struct AlertModel {
-    let title: String,
-    let message: String,
-    let buttonText: String,
+    let title: String
+    let message: String
+    let buttonText: String
     let completion: () -> Void
 }

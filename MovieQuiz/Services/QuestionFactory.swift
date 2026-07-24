@@ -8,7 +8,7 @@
 import Foundation
 
 // Тут храниться массив с вопросами и один метод, который возвращает случайно выбранный вопрос
-class QuestionFactory: QuestionFactoryProtocol {
+final class QuestionFactory: QuestionFactoryProtocol {
     // Массив моковых вопросов
     private let questions: [QuizQuestion] = [
         QuizQuestion(
