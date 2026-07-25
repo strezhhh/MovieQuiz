@@ -185,7 +185,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             title: "Этот раунд окончен!",
             message: "Ваш результат: \(correctAnswers)/\(questionsAmount)",
             buttonText: "Сыграть еще раз",
-            completion: { self.didShowAlert()
+            completion: { [weak self] in
+                guard let self else { return }
+                self.didShowAlert()
             }
         )
         let alertPresenter = AlertPresenter()
