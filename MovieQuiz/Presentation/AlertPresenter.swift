@@ -11,9 +11,9 @@ import UIKit
 class AlertPresenter: AlertPresenterProtocol {
     
     weak var delegate: AlertPresenterDelegate?
-        
+    
     // Метод отображения Алерты с результатами Квиза, полученными от делегата и уведомления Контролера о событии
-    func showAlert(viewControler: UIViewController, with result: AlertModel?) {
+    func showAlert(viewController: UIViewController, with result: AlertModel?) {
         let alert = UIAlertController(
             title: result!.title,
             message: result!.message,
@@ -25,10 +25,10 @@ class AlertPresenter: AlertPresenterProtocol {
         ) {_ in
             result!.completion()
         }
-
+        
         alert.addAction(action)
-        viewControler.present(alert, animated: true, completion: nil)
-
+        viewController.present(alert, animated: true, completion: nil)
+        
     }
     
     // Метод инициализации Делегата

@@ -180,8 +180,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // Метод вызывается, когда нужно показать Результат Квиза
-    // Сначала создает модель AlertPresenter
-    // и передать ее Делегатору.
     private func calledWhenNeedShowResults () {
         resultQuiz = AlertModel (
             title: "Этот раунд окончен!",
@@ -193,62 +191,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         let alertPresenter = AlertPresenter()
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
-
-        alertPresenter.showAlert(viewControler: self, with: resultQuiz)
+        alertPresenter.showAlert(viewController: self, with: resultQuiz)
     }
 }
-
-//    Старый метод формирующий алерту с результатами квиза
-//    private func show(quiz result: QuizResultsViewModel) {
-//        let alert = UIAlertController(
-//            title: result.title,
-//            message: result.text,
-//            preferredStyle: .alert
-//        )
-//        let action = UIAlertAction(
-//            title: result.buttonText,
-//            style: .default
-//        ) { [weak self] _ in // это слабая ссылка на self
-//            guard let self = self else { return } // разворачиваем self
-//            self.currentQuestionIndex = 0
-//            self.correctAnswers = 0
-//            questionFactory?.requestNextQuestion()
-//            self.hideBorder()
-//
-//        }
-//        alert.addAction(action)
-//        self.present(alert, animated: true, completion: nil)
-//    }
-
-/*
- Задача Sprint_05
- -- В классе MovieQuizViewController есть метод show(quiz result: QuizResultsViewModel). Он отвечает за отображение алерта с результатами квиза после прохождения всех вопросов.
- -- Отображением другого экрана необязательно должен заниматься именно MovieQuizViewController. Вынесите эту логику в отдельный класс AlertPresenter.
- + Чтобы передавать данные для отображения, создайте структуру AlertModel в отдельном файле и сохраните его в папке Models.
- -- В структуре AlertModel должны быть:
- + текст заголовка алерта title,
- + текст сообщения алерта message,
- + текст для кнопки алерта buttonText,
- + замыкание без параметров для действия по кнопке алерта completion.
- + Файл AlertPresenter.swift положите в папку Presentation.
- Контроллер в методе окончания игры должен:
- создавать модель для AlertPresenter,
- передавать её в написанный метод этого класса для отображения алерта.
- По нажатию на кнопку алерта контроллер должен обновить состояние и запустить игру заново.
- 
- т.е. Контролер формирует данные с результатами Квиза, передает их в AlertPresenter, а AlertPresenter с новой логикой ТОЛЬКО отображает их!
- 
- Мне нужно:
- 0 -- Инициализируем делегата для AlertPresenter тогда когда Квиз подошел к концу или в начале?
- 0 -- В НАЧАЛЕ
- 1 -- Контролер формирует данные для Алерты согласно AlertModel
- 1 -- Контролер в showNextQuestionOrResults формирует данные в структуре QuizResultsViewModel и нужно их конвертировать в структуру данных AlertModel для Алерты и передает их в метод АлертПрезентора
- 2 -- Контролер вызывает метод отображения Алерты у Делегатора
- 3 -- Делегатор принимает данные у Контролера и отображает Алерту
- 4 -- Юзер нажимает кнопку "Сыграть еще раз"
- 5 -- Делегатор сообщает об этом Делегату-Контролеру
- 6 -- Контролер показывает первый вопрос
- 
- 
- */
-
