@@ -11,7 +11,7 @@ import UIKit
 protocol AlertPresenterProtocol {
     
     // Метод вызова Алерты
-    func showAlert(viewController: UIViewController, with result: AlertModel?)
+    func show(viewController: UIViewController, with result: AlertModel?)
     
     // Метод инициализации делегата
     func didSetDelegate(_ delegate: AlertPresenterDelegate?)

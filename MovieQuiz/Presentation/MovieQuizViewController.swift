@@ -83,7 +83,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
     // и юзер нажал кнопку "Сыграть еще раз"
-    func didShowAlert() {
+    func restartGame() {
         self.currentQuestionIndex = 0
         self.correctAnswers = 0
         questionFactory?.requestNextQuestion()
@@ -187,12 +187,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             buttonText: "Сыграть еще раз",
             completion: { [weak self] in
                 guard let self else { return }
-                self.didShowAlert()
+                self.restartGame()
             }
         )
         let alertPresenter = AlertPresenter()
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
-        alertPresenter.showAlert(viewController: self, with: resultQuiz)
+        alertPresenter.show(viewController: self, with: resultQuiz)
     }
 }

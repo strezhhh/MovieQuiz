@@ -12,5 +12,5 @@ import UIKit
 protocol AlertPresenterDelegate: AnyObject {
     
     // метод, который вызовет делегатор, чтобы сообщить, что юзер проинформирован и нажал кнопку
-    func didShowAlert()
+    func restartGame()
 }
