@@ -14,16 +14,17 @@ class AlertPresenter: AlertPresenterProtocol {
     
     // Метод отображения Алерты с результатами Квиза, полученными от делегата и уведомления Контролера о событии
     func show(viewController: UIViewController, with result: AlertModel?) {
+        guard let result else { return }
         let alert = UIAlertController(
-            title: result!.title,
-            message: result!.message,
+            title: result.title,
+            message: result.message,
             preferredStyle: .alert
         )
         let action = UIAlertAction(
-            title: result!.buttonText,
+            title: result.buttonText,
             style: .default
         ) {_ in
-            result!.completion()
+            result.completion()
         }
         
         alert.addAction(action)
