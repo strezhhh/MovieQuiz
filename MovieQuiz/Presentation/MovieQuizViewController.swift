@@ -62,7 +62,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         super.viewDidLoad()
         setupUI()
         setupQuestionFactory()
-        //setupAlertPresenter()
     }
     
     // MARK: - QuestionFactoryDelegate
