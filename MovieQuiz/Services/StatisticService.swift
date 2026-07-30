@@ -75,7 +75,6 @@ final class StatisticService: StatisticServiceProtocol {
         }
     }
     
-    
     // отношение общего числа правильных ответов ко всем заданным вопросам за все игры
     var totalAccuracy: Double {
         if storage.integer(forKey: "\(Keys.totalQuestionsAsked)") == 0 {

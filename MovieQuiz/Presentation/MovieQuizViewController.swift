@@ -55,7 +55,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Переменная хранящая текущие результаты квиза
     private var resultQuiz: AlertModel?
     
-    var statisticService: StatisticServiceProtocol?
+    // Переменная хранящая статистику квизов
+    private var statisticService: StatisticServiceProtocol?
     
     
     
