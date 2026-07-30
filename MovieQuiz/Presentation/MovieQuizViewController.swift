@@ -41,7 +41,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private var currentQuestionIndex: Int = 0
     
     // Общее количество вопросов для Квиза
-    private let questionsAmount: Int = 3
+    private let questionsAmount: Int = 10
     
     // Фабрика вопросов в которую будет обращаться Контролер
     private var questionFactory: QuestionFactoryProtocol?
@@ -203,8 +203,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод формирует текст для Алерты на основе данных StatisticService.
     private func preparingAlertMessage() {
-        statisticService = StatisticService()
         
+        statisticService = StatisticService()
         guard let statisticService else { return }
         
         // Конвертируем дату в формат dd.MM.yy HH:mm

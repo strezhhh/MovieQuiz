@@ -48,7 +48,6 @@ final class StatisticService: StatisticServiceProtocol {
     }
     
     
-    
     // MARK: - Properties
     
     // Количество сыгранных Квизов
