@@ -204,21 +204,23 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод формирует текст для Алерты на основе данных StatisticService.
     private func preparingAlertMessage() {
         statisticService = StatisticService()
-
+        
         guard let statisticService else { return }
         
-
-        
-        // Укорачиваем дату до формата dd.MM.yy HH:mm
+        // Конвертируем дату в формат dd.MM.yy HH:mm
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yy HH:mm"
+            return formatter
+        }()
         let date = statisticService.bestGame.date
-        
         
         resultQuiz = AlertModel (
             title: "Этот раунд окончен!",
             message: """
             Ваш результат: \(correctAnswers)/\(questionsAmount)
             Количество сыгранных квизов: \(statisticService.gamesCount)
-            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(date)
+            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: date)))
             Средняя точность: \(statisticService.totalAccuracy)%
             """,
             buttonText: "Сыграть еще раз",
@@ -232,16 +234,5 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         self.alertPresenter = alertPresenter
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
-    
-    
+        
 }
-
-// let myDouble = 3.141
-// let doubleStr = String(format: "%.2f", myDouble) // "3.14"
-
-//    .description
-
-//Ваш результат: 6/10
-//Количество сыгранных квизов: 1
-//Рекорд: 6/10 (03.07.22 03:23)
-//Средняя точность: 60.00%
