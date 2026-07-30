@@ -243,7 +243,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         guard let alertPresenter else { return }
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
-        
+    
 }
 
 
