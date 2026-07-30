@@ -190,9 +190,37 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод вызывается, когда нужно показать Результат Квиза
     private func calledWhenNeedShowResults () {
+        updateStatistic()
+        preparingAlertMessage()
+    }
+    
+    
+    // Метод обновляет данные для статистики
+    private func updateStatistic(){
+        let statisticService = StatisticService()
+        statisticService.store(correct: correctAnswers, total: questionsAmount)
+    }
+    
+    // Метод формирует текст для Алерты на основе данных StatisticService.
+    private func preparingAlertMessage() {
+        statisticService = StatisticService()
+
+        guard let statisticService else { return }
+        
+
+        
+        // Укорачиваем дату до формата dd.MM.yy HH:mm
+        let date = statisticService.bestGame.date
+        
+        
         resultQuiz = AlertModel (
             title: "Этот раунд окончен!",
-            message: "Ваш результат: \(correctAnswers)/\(questionsAmount)",
+            message: """
+            Ваш результат: \(correctAnswers)/\(questionsAmount)
+            Количество сыгранных квизов: \(statisticService.gamesCount)
+            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(date)
+            Средняя точность: \(statisticService.totalAccuracy)%
+            """,
             buttonText: "Сыграть еще раз",
             completion: { [weak self] in
                 guard let self else { return }
@@ -203,9 +231,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
         alertPresenter.show(viewController: self, with: resultQuiz)
-        
-        let statisticService = StatisticService()
-        statisticService.store(correct: correctAnswers, total: questionsAmount)
-        
     }
+    
+    
 }
+
+// let myDouble = 3.141
+// let doubleStr = String(format: "%.2f", myDouble) // "3.14"
+
+//    .description
+
+//Ваш результат: 6/10
+//Количество сыгранных квизов: 1
+//Рекорд: 6/10 (03.07.22 03:23)
+//Средняя точность: 60.00%

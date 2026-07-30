@@ -82,7 +82,7 @@ final class StatisticService: StatisticServiceProtocol {
         if storage.integer(forKey: "\(Keys.totalQuestionsAsked)") == 0 {
             return 0
         } else {
-            return Double(storage.integer(forKey: "\(Keys.totalCorrectAnswers)")) / Double(storage.integer(forKey: "\(Keys.totalQuestionsAsked)")) * 100
+            return (round(100 * (Double(storage.integer(forKey: "\(Keys.totalCorrectAnswers)")) / Double(storage.integer(forKey: "\(Keys.totalQuestionsAsked)")) * 100)) / 100)
         }
     }
     
@@ -93,8 +93,8 @@ final class StatisticService: StatisticServiceProtocol {
         gamesCount += 1
         
         // Увеличиваем количество верных ответов и общее число вопросов
-        totalCorrectAnswers = count
-        totalQuestionsAsked = amount
+        totalCorrectAnswers = correct
+        totalQuestionsAsked = total
         
         // Проверяем это самая первая игра в истории или нет,
         // если да, то прописываем нулевые значения для bestGame,
@@ -120,20 +120,12 @@ final class StatisticService: StatisticServiceProtocol {
             date: Date()
         )
         if currentGame.isBetterThan(bestGame) {
-            print("Эта лучшая игра")
-            print("новая игра: \(currentGame)")
-            print("Старая игра: \(bestGame)")
             bestGame = currentGame
-        } else {
-            print("Раньше было получше")
-            print("новая игра: \(currentGame)")
-            print("Старая игра: \(bestGame)")
         }
-        print(gamesCount, bestGame)
-        print(totalCorrectAnswers, totalQuestionsAsked, totalAccuracy)
     }
     
 }
+
 
 
 
