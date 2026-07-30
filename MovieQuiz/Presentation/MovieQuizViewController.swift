@@ -41,7 +41,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private var currentQuestionIndex: Int = 0
     
     // Общее количество вопросов для Квиза
-    private let questionsAmount: Int = 10
+    private let questionsAmount: Int = 3
     
     // Фабрика вопросов в которую будет обращаться Контролер
     private var questionFactory: QuestionFactoryProtocol?
@@ -54,6 +54,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Переменная хранящая текущие результаты квиза
     private var resultQuiz: AlertModel?
+    
+    var statisticService: StatisticServiceProtocol?
+    
     
     
     // MARK: - Lifecycle
@@ -111,6 +114,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
     }
     
+    // Метод инициализации AlertPresenter() и установки делегата
+    private func setupAlertPresenter() {
+        let alertPresenter = AlertPresenter()
+        alertPresenter.didSetDelegate(self)
+        self.alertPresenter = alertPresenter
+    }
     
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -178,6 +187,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         hideBorder()
     }
     
+    
     // Метод вызывается, когда нужно показать Результат Квиза
     private func calledWhenNeedShowResults () {
         resultQuiz = AlertModel (
@@ -193,5 +203,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
         alertPresenter.show(viewController: self, with: resultQuiz)
+        
+        let statisticService = StatisticService()
+        statisticService.store(correct: correctAnswers, total: questionsAmount)
+        
     }
 }
