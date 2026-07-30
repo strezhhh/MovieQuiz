@@ -66,6 +66,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         super.viewDidLoad()
         setupUI()
         setupQuestionFactory()
+        alertPresenterDelegate()
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -83,6 +84,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // MARK: - AlertPresenterDelegate
+    private func alertPresenterDelegate() {
+        let alertPresenter = AlertPresenter()
+        alertPresenter.didSetDelegate(self)
+        self.alertPresenter = alertPresenter
+    }
     
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
     // и юзер нажал кнопку "Сыграть еще раз"
@@ -121,6 +127,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
     }
+    
     
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -198,15 +205,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод обновляет данные для статистики
     private func updateStatistic(){
-        let statisticService = StatisticService()
+//        let statisticService = StatisticService()
+        guard let statisticService else { return }
         statisticService.store(correct: correctAnswers, total: questionsAmount)
     }
     
     // Метод формирует текст для Алерты на основе данных StatisticService.
     private func preparingAlertMessage() {
         
-        statisticService = StatisticService()
-        guard let statisticService else { return }
+        let statisticService = StatisticService()
         
         // Конвертируем дату в формат dd.MM.yy HH:mm
         let dateFormatter: DateFormatter = {
@@ -230,10 +237,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
                 self.restartGame()
             }
         )
-        let alertPresenter = AlertPresenter()
-        alertPresenter.didSetDelegate(self)
-        self.alertPresenter = alertPresenter
+
+        guard let alertPresenter else { return }
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
         
 }
+
+
+
