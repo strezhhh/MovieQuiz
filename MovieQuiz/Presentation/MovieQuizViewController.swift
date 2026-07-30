@@ -66,7 +66,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         super.viewDidLoad()
         setupUI()
         setupQuestionFactory()
-        alertPresenterDelegate()
+        setupAlertPresenter()
+        setupStatisticService()
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -84,11 +85,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // MARK: - AlertPresenterDelegate
-    private func alertPresenterDelegate() {
-        let alertPresenter = AlertPresenter()
-        alertPresenter.didSetDelegate(self)
-        self.alertPresenter = alertPresenter
-    }
     
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
     // и юзер нажал кнопку "Сыграть еще раз"
@@ -99,7 +95,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         self.hideBorder()
     }
     
-    // MARK: - Private Methods
+    // MARK: - Private Initialization Methods
     
     // Метод инициализации Label
     private func setupUI() {
@@ -112,7 +108,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод инициализации фабрики вопросов и установки делегата
     private func setupQuestionFactory() {
-        let questionFactory = QuestionFactory()
+        questionFactory = QuestionFactory()
+        guard let questionFactory else { return }
         questionFactory.didSetDelegate(self)
         self.questionFactory = questionFactory
         questionFactory.requestNextQuestion()
@@ -121,13 +118,20 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
     }
     
-    // Метод инициализации AlertPresenter() и установки делегата
+    // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
     private func setupAlertPresenter() {
-        let alertPresenter = AlertPresenter()
+        alertPresenter = AlertPresenter()
+        guard let alertPresenter else { return }
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
     }
     
+    // Метод инициализации переменной statisticService
+    private func setupStatisticService() {
+        statisticService = StatisticService()
+    }
+    
+    // MARK: - Private Methods
     
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -205,7 +209,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод обновляет данные для статистики
     private func updateStatistic(){
-//        let statisticService = StatisticService()
+
         guard let statisticService else { return }
         statisticService.store(correct: correctAnswers, total: questionsAmount)
     }
@@ -213,22 +217,20 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод формирует текст для Алерты на основе данных StatisticService.
     private func preparingAlertMessage() {
         
-        let statisticService = StatisticService()
-        
-        // Конвертируем дату в формат dd.MM.yy HH:mm
+        guard let statisticService else { return }
+        // Меняем формат даты под нужный формат dd.MM.yy HH:mm
         let dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd.MM.yy HH:mm"
             return formatter
         }()
-        let date = statisticService.bestGame.date
         
         resultQuiz = AlertModel (
             title: "Этот раунд окончен!",
             message: """
             Ваш результат: \(correctAnswers)/\(questionsAmount)
             Количество сыгранных квизов: \(statisticService.gamesCount)
-            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: date)))
+            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: statisticService.bestGame.date)))
             Средняя точность: \(statisticService.totalAccuracy)%
             """,
             buttonText: "Сыграть еще раз",
