@@ -5,7 +5,7 @@
 //  Created by Pavel Strezh on 01.08.2026.
 //
 
-import UIKit
+import Foundation
 
 // Настройки интерфейса пользователя
 struct SetUI {
