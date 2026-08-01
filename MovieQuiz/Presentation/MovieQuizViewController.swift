@@ -99,9 +99,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private func setupUI() {
         questionLabel.font = Fonts.ysDisplayBold23
         questionTitleLabel.font = Fonts.ysDisplayMedium20
-        questionTitleLabel.text = "Вопрос"
+        questionTitleLabel.text = SetUI.tittleLabelText
         indexLabel.font = Fonts.ysDisplayMedium20
-        previewImageView.layer.cornerRadius = 20
+        previewImageView.layer.cornerRadius = SetUI.imageViewCornerRadius
     }
     
     // Метод инициализации фабрики вопросов и установки делегата
