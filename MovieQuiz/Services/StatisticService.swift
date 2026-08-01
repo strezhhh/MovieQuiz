@@ -31,7 +31,7 @@ final class StatisticService: StatisticServiceProtocol {
             storage.integer(forKey: "\(Keys.totalCorrectAnswers.rawValue)")
         }
         set {
-            let value = UserDefaults.standard.integer(forKey: "totalCorrectAnswers") + newValue
+            let value = storage.integer(forKey: "totalCorrectAnswers") + newValue
             storage.set(value, forKey: "\(Keys.totalCorrectAnswers.rawValue)")
         }
     }
@@ -42,7 +42,7 @@ final class StatisticService: StatisticServiceProtocol {
             storage.integer(forKey: "\(Keys.totalQuestionsAsked.rawValue)")
         }
         set {
-            storage.set(UserDefaults.standard.integer(forKey: "gamesCount") * 10, forKey: "\(Keys.totalQuestionsAsked.rawValue)")
+            storage.set(storage.integer(forKey: "gamesCount") * 10, forKey: "\(Keys.totalQuestionsAsked.rawValue)")
             
         }
     }
