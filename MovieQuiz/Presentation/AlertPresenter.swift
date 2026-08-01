@@ -8,7 +8,7 @@
 import UIKit
 
 // Тут содержится метод для отображения Алерты c полученными результатами Квиза
-class AlertPresenter: AlertPresenterProtocol {
+final class AlertPresenter: AlertPresenterProtocol {
     
     weak var delegate: AlertPresenterDelegate?
     
