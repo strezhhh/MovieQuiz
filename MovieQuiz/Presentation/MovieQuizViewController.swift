@@ -19,8 +19,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         guard let currentQuestions = currentQuestion else {
             return
         }
-        let givenAnswer: Bool = true
-        showAnswerResult(isCorrect: givenAnswer == currentQuestions.correctAnswer)
+        showAnswerResult(isCorrect: currentQuestions.correctAnswer)
     }
     
     // Метод вызывается когда юзер нажимает кнопку "Нет"
@@ -28,8 +27,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         guard let currentQuestions = currentQuestion else {
             return
         }
-        let givenAnswer: Bool = false
-        showAnswerResult(isCorrect: givenAnswer == currentQuestions.correctAnswer)
+        showAnswerResult(isCorrect: !currentQuestions.correctAnswer)
     }
     
     // MARK: - Properties
