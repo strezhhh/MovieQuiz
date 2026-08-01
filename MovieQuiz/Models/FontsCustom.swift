@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Кастомные шрифты для UI
 struct Fonts {
     private static let ysDisplayBoldFontName = "YSDisplay-Bold"
     static let ysDisplayBold23 = UIFont(name: ysDisplayBoldFontName, size: 23)
