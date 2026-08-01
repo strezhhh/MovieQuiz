@@ -87,10 +87,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
     // и юзер нажал кнопку "Сыграть еще раз"
     func restartGame() {
-        self.currentQuestionIndex = 0
-        self.correctAnswers = 0
+        currentQuestionIndex = 0
+        correctAnswers = 0
         questionFactory?.requestNextQuestion()
-        self.hideBorder()
+        hideBorder()
     }
     
     // MARK: - Private Initialization Methods
