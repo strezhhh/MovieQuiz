@@ -97,10 +97,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод инициализации Label
     private func setupUI() {
-        questionLabel.font = UIFont(name: "YSDisplay-Bold", size: 23)
-        questionTitleLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        questionLabel.font = Fonts.ysDisplayBold23
+        questionTitleLabel.font = Fonts.ysDisplayMedium20
         questionTitleLabel.text = "Вопрос"
-        indexLabel.font = UIFont(name: "YSDisplay-Medium", size: 20)
+        indexLabel.font = Fonts.ysDisplayMedium20
         previewImageView.layer.cornerRadius = 20
     }
     
