@@ -5,7 +5,7 @@
 //  Created by Pavel Strezh on 23.07.2026.
 //
 
-import UIKit
+import Foundation
 
 // Структура данных для Алерты с результатами Квиза.
 struct AlertModel {

@@ -5,7 +5,7 @@
 //  Created by Pavel Strezh on 28.07.2026.
 //
 
-import UIKit
+import Foundation
 
 // Структура лучшего результата Квиза, которую будем сохранять в UserDefaults
 struct GameResult {
