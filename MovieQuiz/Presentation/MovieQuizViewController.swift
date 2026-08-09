@@ -243,6 +243,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
     
+    private func showLoadingIndicator() {
+        activityIndicator.isHidden = false // Индикатор не скрыт
+        activityIndicator.startAnimating() // включаем анимацию
+    }
+        
 }
 
 
