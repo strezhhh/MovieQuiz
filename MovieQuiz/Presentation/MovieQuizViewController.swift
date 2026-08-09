@@ -57,6 +57,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Переменная хранящая статистику квизов
     private var statisticService: StatisticServiceProtocol?
     
+    // Переменная хранящая модель для Network error
+    private var networkError: AlertModel?
+    
     
     
     // MARK: - Lifecycle
@@ -250,6 +253,22 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     private func showNetworkError(message: String) {
         hideLoadingIndicator() // скрываем индикатор загрузки
+        
+        networkError = AlertModel (
+            title: "Ошибка!",
+            message: message,
+            buttonText: "Попробовать еще раз",
+            completion: { [weak self] in
+                guard let self else { return }
+                
+                self.currentQuestionIndex = 0
+                self.correctAnswers = 0
+                
+                self.questionFactory?.requestNextQuestion()
+            }
+            
+            guard let alertPresenter else { return }
+            alertPresenter.show(viewController: self, with: networkError)
     }
 }
 
