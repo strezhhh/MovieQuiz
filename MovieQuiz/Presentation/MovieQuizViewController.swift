@@ -247,7 +247,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         activityIndicator.isHidden = false // Индикатор не скрыт
         activityIndicator.startAnimating() // включаем анимацию
     }
-        
+    
+    private func showNetworkError(message: String) {
+        hideLoadingIndicator() // скрываем индикатор загрузки
+    }
 }
 
 
