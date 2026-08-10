@@ -86,6 +86,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
     }
     
+    // Метод сообщит о получении данных с сервера
+    func didLoadDataFromServer() {
+        activityIndicator.isHidden = true
+        questionFactory?.requestNextQuestion()
+    }
+    
+    // Метод сообщит о получении ошибки с сервера
+    func didFailToLoadData(with error: Error) {
+        // Берем тип Error и передаем в showNetworkError() тип String
+        showNetworkError(message: error.localizedDescription)
+    }
+    
     // MARK: - AlertPresenterDelegate
     
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
@@ -246,13 +258,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
     
+    // Метод отображения индикатора загрузки
     private func showLoadingIndicator() {
         activityIndicator.isHidden = false // Индикатор не скрыт
         activityIndicator.startAnimating() // включаем анимацию
     }
     
+    // Метод формирования сообщения об ошибке получения данных по сети
     private func showNetworkError(message: String) {
-        hideLoadingIndicator() // скрываем индикатор загрузки
+        hideLoadingIndicator()
         
         networkError = AlertModel (
             title: "Ошибка!",
@@ -270,6 +284,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             guard let alertPresenter else { return }
             alertPresenter.show(viewController: self, with: networkError)
     }
+    
+
+    
 }
 
 
