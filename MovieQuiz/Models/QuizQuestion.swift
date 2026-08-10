@@ -9,7 +9,7 @@ import Foundation
 
 // Структура вопроса
 struct QuizQuestion {
-    let imageName: String
+    let imageName: Data
     let text: String
     let correctAnswer: Bool
 }
