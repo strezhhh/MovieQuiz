@@ -9,62 +9,22 @@ import Foundation
 
 // Тут храниться массив с вопросами и один метод, который возвращает случайно выбранный вопрос
 final class QuestionFactory: QuestionFactoryProtocol {
-    // Массив моковых вопросов
-    private let questions: [QuizQuestion] = [
-        QuizQuestion(
-            imageName: "The Godfather",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: true),
-        
-        QuizQuestion(
-            imageName: "The Dark Knight",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: true),
-        
-        QuizQuestion(
-            imageName: "Kill Bill",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: true),
-        
-        QuizQuestion(
-            imageName: "The Avengers",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: true),
-        
-        QuizQuestion(
-            imageName: "Deadpool",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: true),
-        
-        QuizQuestion(
-            imageName: "The Green Knight",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: true),
-        
-        QuizQuestion(
-            imageName: "Old",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: false),
-        
-        QuizQuestion(
-            imageName: "The Ice Age Adventures of Buck Wild",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: false),
-        
-        QuizQuestion(
-            imageName: "Tesla",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: false),
-        
-        QuizQuestion(
-            imageName: "Vivarium",
-            text: "Рейтинг этого фильма больше чем 6?",
-            correctAnswer: false)
-    ]
+    
+    // MARK: - Properties
+    
+    private let moviesLoader: MoviesLoading
+    private var movies: [MostPopularMovies] = []
     
     // MARK: - Delegates
     
     weak var delegate: QuestionFactoryDelegate?
+    
+    // MARK: - Init Method
+    
+    init(moviesLoader: MoviesLoading, delegate: QuestionFactoryDelegate?) {
+        self.moviesLoader = moviesLoader
+        self.delegate = delegate
+    }
     
     // MARK: - Methods
 
@@ -84,6 +44,19 @@ final class QuestionFactory: QuestionFactoryProtocol {
         self.delegate = delegate
     }
     
+    // Метод инициирует загрузку данных по сети
+    func loadData() {
+        moviesLoader.loadMovies { [weak self] in
+            guard let self = self else { return }
+            switch result {
+            case .success(let mostPopularMovies):
+                self.movies = mostPopularMovies.items
+                self.delegate?.didLoadDataFromServer()
+            case .failure(let error):
+                self.delegate?.didFailToLoadData(with: error)
+            }
+        }
+    }
     
 }
 
