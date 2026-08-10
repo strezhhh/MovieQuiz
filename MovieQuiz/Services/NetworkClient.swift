@@ -22,6 +22,7 @@ struct NetworkClient {
         // Создаем запрос из URL
         let request = URLRequest(url: url)
         
+        // Создаем задачу стоящую на паузе
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             // Проверяем, пришла ли ошибка
             if let error = error {
@@ -41,6 +42,7 @@ struct NetworkClient {
             handler(.success(data))
         }
         
+        // Запускаем задачу
         task.resume()
     }
 }

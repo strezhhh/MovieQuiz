@@ -25,4 +25,14 @@ struct MostPopularMovie: Codable {
         case rating = "imDbRating"
         case imageURL = "image"
     }
+    
+    // Инициализация констант
+    init(from decoder: Decoder) throws {
+        let container = decoder.container(keyedBy: CodingKeys.self)
+        title = container.decode(String.self, forKey: title)
+        rating = container.decode(String.self, forKey: rating)
+        imageURL = container.decode(String.self, forKey: imageURL)
+        
+    }
+
 }
