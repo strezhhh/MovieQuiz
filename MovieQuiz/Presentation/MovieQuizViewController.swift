@@ -149,6 +149,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
+        
         QuizStepViewModel(
             image: UIImage(named: model.imageName) ?? UIImage(),
             question: model.text,
