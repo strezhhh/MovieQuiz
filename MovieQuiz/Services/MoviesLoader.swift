@@ -26,11 +26,9 @@ struct MoviesLoader: MoviesLoading {
                 }
                 return url
             }
-
     }
-    // networkClient, mostPopularMoviesUrl
     
-    
+    // Метод преобразует полученную от networkClient Data в MostPopularMovies
     func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void) {
     
         networkClient.fetch(url: mostPopularMoviesUrl) { result in
