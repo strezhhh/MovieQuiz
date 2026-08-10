@@ -7,11 +7,13 @@
 
 import Foundation
 
+// Структура JSON
 struct MostPopularMovies: Codable {
     let errorMessage: String
     let items: [MostPopularMovie]
 }
 
+// Структура конкретного фильма
 struct MostPopularMovie: Codable {
     let title: String
     let rating: String
