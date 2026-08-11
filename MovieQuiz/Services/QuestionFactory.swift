@@ -113,7 +113,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
             // Сообщаем делегату в главном потоке, что новый вопрос подготовлен
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.delegate?.didReceiveNextQuestion(question: <#T##QuizQuestion?#>)
+                self.delegate?.didReceiveNextQuestion(question: question)
             }
         }
     }

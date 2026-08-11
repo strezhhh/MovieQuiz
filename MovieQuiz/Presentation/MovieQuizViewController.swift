@@ -72,6 +72,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setupUI()
         setupAlertPresenter()
         setupStatisticService()
+        initMoviesLoader()
         showLoadingIndicator()
         setupQuestionFactory()
     }
@@ -149,13 +150,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         statisticService = StatisticService()
     }
     
-    // Метод инициирует загрузку данных по сети
-    private func initMoviesLoader() {
-        moviesLoader = MoviesLoader()
-        guard let moviesLoader else { return }
-        moviesLoader.loadMovies(handler: <#T##(Result<MostPopularMovies, any Error>) -> Void#>)
-        
-    }
     
     // MARK: - Private Methods
     
