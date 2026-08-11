@@ -86,8 +86,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
         currentQuestion = question
         let viewModel = convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.show(quiz: viewModel)
+        DispatchQueue.main.async {
+            self.show(quiz: viewModel)
         }
         setButtonsIsEnabled(to: true)
         hideBorder()
@@ -157,7 +157,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         QuizStepViewModel(
-            image: UIImage(data: model.image) ?? UIImage(),
+            image: UIImage(data: model.imageData) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
         )

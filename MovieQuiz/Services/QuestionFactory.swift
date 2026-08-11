@@ -105,7 +105,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
             let correctAnswer = rating > Float(rank)
             
             let question = QuizQuestion(
-                image: imageData,
+                imageData: imageData,
                 text: text,
                 correctAnswer: correctAnswer
             )
