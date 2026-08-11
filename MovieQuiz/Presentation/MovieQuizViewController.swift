@@ -129,7 +129,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
         guard let questionFactory else { return }
         questionFactory.didSetDelegate(self)
-        //self.questionFactory = questionFactory
+        self.questionFactory = questionFactory
         questionFactory.loadData()
         if let firstQuestion = currentQuestion {
             show(quiz: convert(model: firstQuestion))
@@ -292,6 +292,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
             
+                self.questionFactory?.loadData()
                 self.questionFactory?.requestNextQuestion()
                 self.showLoadingIndicator()
             } )
