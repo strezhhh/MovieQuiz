@@ -22,8 +22,9 @@ struct NetworkClient {
     func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
         
         let request = URLRequest(url: url)
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let conf = URLSessionConfiguration.default
+        conf.timeoutIntervalForRequest = 10
+        let task = URLSession(configuration: conf).dataTask(with: request) { data, response, error in
             if let error = error {
                 handler(.failure(error))
                 return
