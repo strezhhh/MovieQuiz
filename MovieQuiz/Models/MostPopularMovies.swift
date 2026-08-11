@@ -19,20 +19,20 @@ struct MostPopularMovie: Codable {
     let rating: String
     let imageURL: URL
     
-    // указываем как называются поля в API json-ответе
-    private enum CodingKeys: String, CodingKey {
-        case title = "fullTitle"
-        case rating = "imDbRating"
-        case imageURL = "image"
-    }
+//    // указываем как называются поля в API json-ответе
+//    private enum CodingKeys: String, CodingKey {
+//        case title = "fullTitle"
+//        case rating = "imDbRating"
+//        case imageURL = "image"
+//    }
     
-    // Инициализация констант
-    init(from decoder: Decoder) throws {
-        let container = decoder.container(keyedBy: CodingKeys.self)
-        title = container.decode(String.self, forKey: title)
-        rating = container.decode(String.self, forKey: rating)
-        imageURL = container.decode(String.self, forKey: imageURL)
-        
-    }
-
+//    // Инициализация констант
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        title = try container.decode(String.self, forKey: title)
+//        rating = try container.decode(String.self, forKey: rating)
+//        imageURL = try container.decode(String.self, forKey: imageURL)
+//        
+//    }
 }
+

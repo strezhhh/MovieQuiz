@@ -72,7 +72,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setupUI()
         setupAlertPresenter()
         setupStatisticService()
-        initMoviesLoader()
         showLoadingIndicator()
         setupQuestionFactory()
     }
@@ -127,11 +126,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод инициализации фабрики вопросов и установки делегата
     private func setupQuestionFactory() {
-        questionFactory = QuestionFactory()
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
         guard let questionFactory else { return }
         questionFactory.didSetDelegate(self)
-        self.questionFactory = questionFactory
-        questionFactory.requestNextQuestion()
+        //self.questionFactory = questionFactory
+        questionFactory.loadData()
         if let firstQuestion = currentQuestion {
             show(quiz: convert(model: firstQuestion))
         }
@@ -230,7 +229,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод обновляет данные для статистики
     private func updateStatistic(){
-
+        
         guard let statisticService else { return }
         statisticService.store(correct: correctAnswers, total: questionsAmount)
     }
@@ -260,7 +259,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
                 self.restartGame()
             }
         )
-
+        
         guard let alertPresenter else { return }
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
@@ -269,6 +268,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private func showLoadingIndicator() {
         activityIndicator.isHidden = false // Индикатор не скрыт
         activityIndicator.startAnimating() // включаем анимацию
+    }
+    
+    private func hideLoadingIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.activityIndicator.isHidden = true // Индикатор скрыт
+            self.activityIndicator.stopAnimating() // выключаем анимацию
+        }
     }
     
     // Метод формирования сообщения об ошибке получения данных по сети
@@ -284,17 +291,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
                 
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
-                
-                self.questionFactory?.requestNextQuestion()
-            }
             
-            guard let alertPresenter else { return }
-            alertPresenter.show(viewController: self, with: networkError)
+                self.questionFactory?.requestNextQuestion()
+                self.showLoadingIndicator()
+            } )
+        
+        guard let alertPresenter else { return }
+        alertPresenter.show(viewController: self, with: networkError)
     }
     
-
-    
 }
-
 
 
