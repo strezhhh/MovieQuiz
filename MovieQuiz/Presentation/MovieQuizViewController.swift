@@ -74,6 +74,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setupStatisticService()
         showLoadingIndicator()
         setupQuestionFactory()
+        setButtonsIsEnabled(to: false) // деактивируем кнопки пока ждем загрузки по сети
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -88,6 +89,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
+        setButtonsIsEnabled(to: true)
     }
     
     // Метод сообщит о получении данных с сервера
@@ -167,7 +169,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         indexLabel.text = "\(step.questionNumber)"
         previewImageView.image = step.image
         questionLabel.text = step.question
-        setButtonsIsEnabled(to: true)
     }
     
     // Метод показывает обводку. Вызывается в методе showAnswerResult()
