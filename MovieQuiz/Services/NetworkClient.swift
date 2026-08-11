@@ -17,6 +17,7 @@ struct NetworkClient {
     
     // Функция запроса по заданному URL с API IMDb. Тип GET
     // Функция отдает результат асинхронно через handler
+    // Метод инициируется MoviesLoader'ом
     func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
         
         // Создаем запрос из URL

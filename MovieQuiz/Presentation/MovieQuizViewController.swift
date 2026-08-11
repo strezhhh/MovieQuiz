@@ -60,6 +60,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Переменная хранящая модель для Network error
     private var networkError: AlertModel?
     
+    // Переменная хранит загрузчик данных по сети
+    private var moviesLoader: MoviesLoader?
+    
     
     
     // MARK: - Lifecycle
@@ -67,10 +70,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupQuestionFactory()
         setupAlertPresenter()
         setupStatisticService()
         showLoadingIndicator()
+        setupQuestionFactory()
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -144,6 +147,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод инициализации переменной statisticService
     private func setupStatisticService() {
         statisticService = StatisticService()
+    }
+    
+    // Метод инициирует загрузку данных по сети
+    private func initMoviesLoader() {
+        moviesLoader = MoviesLoader()
+        guard let moviesLoader else { return }
+        moviesLoader.loadMovies(handler: <#T##(Result<MostPopularMovies, any Error>) -> Void#>)
+        
     }
     
     // MARK: - Private Methods
