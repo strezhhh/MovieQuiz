@@ -25,6 +25,7 @@ struct MoviesLoader: MoviesLoading {
     
     // MARK: - Methods
     // Метод преобразует полученную от networkClient Data в MostPopularMovies
+    // Инициализируется в QuestionFactory
     func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void) {
         
         let networkClient = NetworkClient()
@@ -40,11 +41,18 @@ struct MoviesLoader: MoviesLoading {
             switch result {
             case .success(let data):
                 do {
+                    guard let stringData = String(data: data, encoding: .utf8) else {
+                        print("data не получилось пересобрать в строку")
+                        return
+                    }
+                    //print(stringData)
                     let mostPopularMovies = try JSONDecoder().decode(MostPopularMovies.self, from: data)
                     handler(.success(mostPopularMovies))
                     print("loadMovies вернул mostPopularMovies")
                 } catch {
                     print("в loadMovies сработал catch")
+                    print(error)
+                    print(error.localizedDescription)
                     handler(.failure(error))
                 }
             case .failure(let error):

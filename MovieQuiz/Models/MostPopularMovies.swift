@@ -9,14 +9,14 @@ import Foundation
 
 // Структура JSON
 struct MostPopularMovies: Codable {
-    let errorMessage: String
+    let errorMessage: String?
     let items: [MostPopularMovie]
 }
 
 // Структура конкретного фильма
 struct MostPopularMovie: Codable {
     let title: String
-    let rating: String
+    let rating: String?
     let imageURL: URL
     
     // указываем как называются поля в API json-ответе
@@ -30,7 +30,7 @@ struct MostPopularMovie: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = try container.decode(String.self, forKey: .title)
-        rating = try container.decode(String.self, forKey: .rating)
+        rating = try container.decode(String?.self, forKey: .rating)
         imageURL = try container.decode(URL.self, forKey: .imageURL)
     }
 }

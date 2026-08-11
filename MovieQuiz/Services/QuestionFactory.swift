@@ -98,8 +98,10 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 print("Failed to load image")
             }
             
+            print("Дошли до requestNextQuestion()")
+
             let rating = Float(movie.rating) ?? 0
-            
+
             // Рандомно выбираем число число в диапозоне от 5 до 7 для вопроса о рейтинге
             let rank = Int.random(in: (4...7))
             let text = "Рейтинг этого фильма больше чем \(rank)?"
