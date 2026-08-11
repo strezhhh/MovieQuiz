@@ -25,7 +25,7 @@ struct NetworkClient {
         let conf = URLSessionConfiguration.default
         conf.timeoutIntervalForRequest = 10
         let task = URLSession(configuration: conf).dataTask(with: request) { data, response, error in
-            if let error = error {
+            if let error {
                 handler(.failure(error))
                 return
             }
