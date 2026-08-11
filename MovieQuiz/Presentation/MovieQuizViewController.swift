@@ -89,7 +89,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
-        setButtonsIsEnabled(to: true)
+        setButtonsIsEnabled(to: true) // активируем кнопки, когда вопрос показан
     }
     
     // Метод сообщит о получении данных с сервера
