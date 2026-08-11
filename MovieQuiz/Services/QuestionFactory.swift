@@ -16,7 +16,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
     private var movies: [MostPopularMovie] = []
     
     // Массив моковых вопросов
-    private let questions: [QuizQuestion] = [
+    // private let questions: [QuizQuestion] = [
         //            QuizQuestion(
         //                imageName: "The Godfather",
         //                text: "Рейтинг этого фильма больше чем 6?",
@@ -66,7 +66,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
         //                imageName: "Vivarium",
         //                text: "Рейтинг этого фильма больше чем 6?",
         //                correctAnswer: false)
-    ]
+        //    ]
     
     // MARK: - Delegates
     
