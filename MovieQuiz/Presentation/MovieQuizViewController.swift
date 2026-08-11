@@ -70,6 +70,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setupQuestionFactory()
         setupAlertPresenter()
         setupStatisticService()
+        showLoadingIndicator()
     }
     
     // MARK: - QuestionFactoryDelegate

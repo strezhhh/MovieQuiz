@@ -7,11 +7,6 @@
 
 import Foundation
 
-// протокол для загрузчика фильмов
-protocol MoviesLoading {
-    func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void)
-}
-
 // Загрузчик реализующий протокол MoviesLoading
 struct MoviesLoader: MoviesLoading {
     
