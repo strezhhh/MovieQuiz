@@ -10,6 +10,9 @@ import Foundation
 // Загрузчик фильмов реализующий протокол MoviesLoading
 struct MoviesLoader: MoviesLoading {
     
+    // MARK: - private Properties
+    private let decoder = JSONDecoder()
+    
     // MARK: - Methods
     // Метод преобразует полученную от networkClient Data в MostPopularMovies
     // Инициализируется в QuestionFactory
@@ -27,7 +30,7 @@ struct MoviesLoader: MoviesLoading {
             switch result {
             case .success(let data):
                 do {
-                    let mostPopularMovies = try JSONDecoder().decode(MostPopularMovies.self, from: data)
+                    let mostPopularMovies = try decoder.decode(MostPopularMovies.self, from: data)
                     handler(.success(mostPopularMovies))
                 } catch {
                     handler(.failure(error))
