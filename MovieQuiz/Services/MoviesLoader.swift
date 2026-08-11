@@ -30,7 +30,8 @@ struct MoviesLoader: MoviesLoading {
         
         let networkClient = NetworkClient()
         var mostPopularMoviesUrl: URL {
-            // Если мы не смогли преобразовать строку в URL, то приложение упадёт с ошибкой
+            
+            // Если мы не смогли преобразовать строку в URL, то приложение упадёт с ошибкой, так как это проблема кода
             guard let url = URL(string: "https://tv-api.com/en/API/MostPopularTVs/k_j4r66gt6") else {
                 preconditionFailure("Unable to construct mostPopularMoviesUrl")
             }
@@ -41,22 +42,12 @@ struct MoviesLoader: MoviesLoading {
             switch result {
             case .success(let data):
                 do {
-                    guard let stringData = String(data: data, encoding: .utf8) else {
-                        print("data не получилось пересобрать в строку")
-                        return
-                    }
-                    //print(stringData)
                     let mostPopularMovies = try JSONDecoder().decode(MostPopularMovies.self, from: data)
                     handler(.success(mostPopularMovies))
-                    print("loadMovies вернул mostPopularMovies")
                 } catch {
-                    print("в loadMovies сработал catch")
-                    print(error)
-                    print(error.localizedDescription)
                     handler(.failure(error))
                 }
             case .failure(let error):
-                print("fetch вернул ошибку")
                 handler(.failure(error))
             }
         }
