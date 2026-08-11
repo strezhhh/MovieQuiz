@@ -74,7 +74,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setupStatisticService()
         showLoadingIndicator()
         setupQuestionFactory()
-        setButtonsIsEnabled(to: false) // деактивируем кнопки пока ждем загрузки по сети
+        setButtonsIsEnabled(to: false)
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -89,7 +89,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
-        setButtonsIsEnabled(to: true) // активируем кнопки, когда вопрос показан
+        setButtonsIsEnabled(to: true)
         hideBorder()
     }
     
@@ -101,7 +101,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод сообщит о получении ошибки с сервера
     func didFailToLoadData(with error: Error) {
-        // Берем тип Error и передаем в showNetworkError() тип String
         showNetworkError(message: error.localizedDescription)
     }
     
@@ -157,7 +156,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        
         QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
@@ -267,15 +265,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод отображения индикатора загрузки
     private func showLoadingIndicator() {
-        activityIndicator.isHidden = false // Индикатор не скрыт
-        activityIndicator.startAnimating() // включаем анимацию
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
     }
     
     private func hideLoadingIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.activityIndicator.isHidden = true // Индикатор скрыт
-            self.activityIndicator.stopAnimating() // выключаем анимацию
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
         }
     }
     
@@ -289,14 +287,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             buttonText: "Попробовать еще раз",
             completion: { [weak self] in
                 guard let self else { return }
-                
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
-            
                 self.questionFactory?.loadData()
                 self.questionFactory?.requestNextQuestion()
                 self.showLoadingIndicator()
-            } )
+            }
+        )
         
         guard let alertPresenter else { return }
         alertPresenter.show(viewController: self, with: networkError)

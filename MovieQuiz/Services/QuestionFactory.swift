@@ -100,18 +100,15 @@ final class QuestionFactory: QuestionFactoryProtocol {
                         
             let rating = Float(movie.rating ?? "0") ?? 0
 
-            // Рандомно выбираем число число в диапозоне от 4 до 7 для вопроса о рейтинге
-            let rank = Int.random(in: (4...7))
+            let rank = Int.random(in: (5...8))
             let text = "Рейтинг этого фильма больше чем \(rank)?"
             let correctAnswer = rating > Float(rank)
             
-            // формируем модель вопроса с данными
             let question = QuizQuestion(
                 image: imageData,
                 text: text,
                 correctAnswer: correctAnswer
             )
-            // Сообщаем делегату в главном потоке, что новый вопрос подготовлен
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.didReceiveNextQuestion(question: question)

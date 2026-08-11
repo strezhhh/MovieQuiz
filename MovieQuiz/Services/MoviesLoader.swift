@@ -17,7 +17,6 @@ struct MoviesLoader: MoviesLoading {
         
         let networkClient = NetworkClient()
         var mostPopularMoviesUrl: URL {
-            // Если мы не смогли преобразовать строку в URL, то приложение упадёт с ошибкой, так как это проблема кода
             guard let url = URL(string: "https://tv-api.com/en/API/MostPopularTVs/k_j4r66gt6") else {
                 preconditionFailure("Unable to construct mostPopularMoviesUrl")
             }
