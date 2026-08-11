@@ -23,6 +23,7 @@ struct MoviesLoader: MoviesLoading {
             }
     }
     
+    // MARK: - Methods
     // Метод преобразует полученную от networkClient Data в MostPopularMovies
     // Метод инициируется в MovieQuizViewController методом viewDidLoad()
     func loadMovies(handler: @escaping (Result<MostPopularMovies, Error>) -> Void) {

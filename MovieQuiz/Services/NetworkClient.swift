@@ -9,12 +9,14 @@ import Foundation
 
 /// Отвечает за загрузку данных по URL
 struct NetworkClient {
-
+    
+    // MARK: - Private Enumeration
     // Простенькая реализация протокола Error для нашего случая
     private enum NetworkError: Error {
         case codeError
     }
     
+    // MARK: - Methods
     // Функция запроса по заданному URL с API IMDb. Тип GET
     // Функция отдает результат асинхронно через handler
     // Метод инициируется MoviesLoader'ом
