@@ -95,7 +95,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод сообщит о получении данных с сервера
     func didLoadDataFromServer() {
-        activityIndicator.isHidden = true
+        hideLoadingIndicator()
         questionFactory?.requestNextQuestion()
     }
     
@@ -124,6 +124,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         questionTitleLabel.text = SetUI.tittleLabelText
         indexLabel.font = Fonts.ysDisplayMedium20
         previewImageView.layer.cornerRadius = CGFloat(SetUI.imageViewCornerRadius)
+        activityIndicator.hidesWhenStopped = true
     }
     
     // Метод инициализации фабрики вопросов и установки делегата
@@ -265,14 +266,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод отображения индикатора загрузки
     private func showLoadingIndicator() {
-        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     
     private func hideLoadingIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.activityIndicator.isHidden = true
             self.activityIndicator.stopAnimating()
         }
     }
