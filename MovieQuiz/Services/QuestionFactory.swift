@@ -81,15 +81,41 @@ final class QuestionFactory: QuestionFactoryProtocol {
     
     // MARK: - Methods
 
-    // Метод генерации следующего мокового вопроса
+    // Метод генерации следующего вопроса используя данные полученные из сети
     func requestNextQuestion() {
-        // рандомно выбираем один из вопросов
-        guard let index = (0..<questions.count).randomElement() else {
-            delegate?.didReceiveNextQuestion(question: nil)
-            return
+        
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            let index = 0..<self.movies.count.words.randomElement() ?? 0
+            
+            guard let movie = movies(safe: index) else { return }
+            
+            var imageData = Data()
+            do {
+                imageData = try Data(contentsOf: movie.imageURL)
+            } catch {
+                print("Failed to load image")
+            }
+            
+            let rating = Float(movie.rating) ?? 0
+            
+            // Рандомно выбираем число число в диапозоне от 5 до 7 для вопроса о рейтинге
+            let rank = (4...7).words.randomElement()
+            let text = "Рейтинг этого фильма больше чем \(rank)?"
+            let correctAnswer = rating > rank
+            
+            // формируем модель вопроса с данными
+            let question = QuizQuestion(
+                image: imageData,
+                text: text,
+                correctAnswer: correctAnswer
+            )
+            // Сообщаем делегату в главном потоке, что новый вопрос подготовлен
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.didReceiveNextQuestion(question: <#T##QuizQuestion?#>)
+            }
         }
-        let questions = questions[safe: index]
-        delegate?.didReceiveNextQuestion(question: questions)
     }
     
     // Метод инициализации делегата
