@@ -90,6 +90,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             self?.show(quiz: viewModel)
         }
         setButtonsIsEnabled(to: true) // активируем кнопки, когда вопрос показан
+        hideBorder()
     }
     
     // Метод сообщит о получении данных с сервера
@@ -217,7 +218,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private func calledWhenNeedShowNextQuestion() {
         currentQuestionIndex += 1
         questionFactory?.requestNextQuestion()
-        hideBorder()
     }
     
     
