@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Logging
 
 // Тут храниться массив с вопросами и один метод, который возвращает случайно выбранный вопрос
 final class QuestionFactory: QuestionFactoryProtocol {
@@ -14,6 +15,8 @@ final class QuestionFactory: QuestionFactoryProtocol {
     
     private let moviesLoader: MoviesLoading
     private var movies: [MostPopularMovie] = []
+
+    private let logger = Logger(label: "MovieQuiz")
     
     // Массив моковых вопросов
     // private let questions: [QuizQuestion] = [
@@ -95,7 +98,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
                 
             } catch {
-                print("Failed to load image")
+                logger.error("Failed to load image", metadata: ["error": "\(error)"])
             }
                         
             let rating = Float(movie.rating ?? "0") ?? 0
