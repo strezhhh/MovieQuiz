@@ -30,7 +30,6 @@ struct NetworkClient {
             // Проверяем, пришла ли ошибка
             if let error = error {
                 handler(.failure(error))
-                print("в fetch error")
                 return
             }
             
@@ -38,7 +37,6 @@ struct NetworkClient {
             if let response = response as? HTTPURLResponse,
                 response.statusCode < 200 || response.statusCode >= 300 {
                 handler(.failure(NetworkError.codeError))
-                print("в fetch ошибка в response")
                 return
             }
             
@@ -46,7 +44,6 @@ struct NetworkClient {
             guard let data = data else {
                 return }
             handler(.success(data))
-            print("в fetch есть данные")
         }
         
         // Запускаем задачу
