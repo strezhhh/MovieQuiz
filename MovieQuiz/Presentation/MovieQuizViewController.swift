@@ -109,6 +109,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         showNetworkError(title: "Ошибка загрузки постера!", message: error.localizedDescription)
     }
     
+    // Тестовый метод оповещения о плохой картинке
+    func didFailToLoadUIImage(with message: String) {
+        showNetworkError(title: "Ошибка загрузки постера!", message: message)
+    }
+    
     // MARK: - AlertPresenterDelegate
     
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана

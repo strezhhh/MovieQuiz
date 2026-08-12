@@ -96,11 +96,16 @@ final class QuestionFactory: QuestionFactoryProtocol {
             var imageData = Data()
             do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
-                if try imageData is UIImage {
-                    return
-                } else {
+                guard let image = UIImage(data: imageData) else {
                     print("Ошибка кастинга изображения")
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.didFailToLoadUIImage(with: "Ошибка кастинга изображения")
                     }
+                    return
+                }
+                    print("Изображения скастилось")
             } catch {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }

@@ -13,4 +13,5 @@ protocol QuestionFactoryDelegate: AnyObject {
     func didLoadDataFromServer() // сообщение об успешной загрузке
     func didFailToLoadData(with error: Error) // сообщение об ошибке загрузки
     func didFailToLoadImage(with error: Error)
+    func didFailToLoadUIImage(with message: String)
 }
