@@ -5,7 +5,7 @@
 //  Created by Pavel Strezh on 19.07.2026.
 //
 
-import Foundation
+import UIKit
 import Logging
 
 // Тут храниться массив с вопросами и один метод, который возвращает случайно выбранный вопрос
@@ -96,10 +96,15 @@ final class QuestionFactory: QuestionFactoryProtocol {
             var imageData = Data()
             do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
+                if try imageData is UIImage {
+                    return
+                } else {
+                    print("Ошибка кастинга изображения")
+                    }
             } catch {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    logger.error("Failed to load image", metadata: ["error1": "\(error)"])
+                    logger.error("Failed to load image", metadata: ["error": "\(error)"])
                     self.delegate?.didFailToLoadImage(with: error)
                     return
                 }
