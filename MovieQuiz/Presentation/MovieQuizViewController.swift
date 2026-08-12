@@ -101,7 +101,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод сообщит о получении ошибки с сервера
     func didFailToLoadData(with error: Error) {
-        showNetworkError(message: error.localizedDescription)
+        showNetworkError(title: "Ошибка!", message: error.localizedDescription)
+    }
+    
+    // Метод сообщит, что не получилось скастить Data в UIImage
+    func didFailToLoadImage(with error: Error) {
+        showNetworkError(title: "Ошибка загрузки постера!", message: error.localizedDescription)
     }
     
     // MARK: - AlertPresenterDelegate
@@ -127,16 +132,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         activityIndicator.hidesWhenStopped = true
     }
     
-    // Метод инициализации фабрики вопросов и установки делегата
+    // Метод инициализации фабрики вопросов, установки делегата и инициации загрузки данных из сети
     private func setupQuestionFactory() {
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
         guard let questionFactory else { return }
         questionFactory.didSetDelegate(self)
-        self.questionFactory = questionFactory
         questionFactory.loadData()
-        if let firstQuestion = currentQuestion {
-            show(quiz: convert(model: firstQuestion))
-        }
+        guard let currentQuestion else {return}
+            show(quiz: convert(model: currentQuestion))
     }
     
     // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
@@ -277,18 +280,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // Метод формирования сообщения об ошибке получения данных по сети
-    private func showNetworkError(message: String) {
+    private func showNetworkError(title: String, message: String) {
         hideLoadingIndicator()
         
         networkError = AlertModel (
-            title: "Ошибка!",
+            title: title,
             message: message,
             buttonText: "Попробовать еще раз",
             completion: { [weak self] in
                 guard let self else { return }
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
-                self.questionFactory?.loadData()
+                //self.questionFactory?.loadData()
                 self.questionFactory?.requestNextQuestion()
                 self.showLoadingIndicator()
             }
