@@ -11,7 +11,8 @@ import XCTest
 class MoviesLoaderTests: XCTestCase {
     func testSuccessLoading() throws {
         // Given
-        let loader = MoviesLoader()
+        let stubNetworkClient = StubNetworkClient(emulateError: false) //говорим, что не хотим эмулировать ошибку
+        let loader = MoviesLoader(networkClient: stubNetworkClient)
         // When
         
         // Так как метод загрузки фильмов асинхронный -- нужно ожидание
@@ -20,14 +21,13 @@ class MoviesLoaderTests: XCTestCase {
         loader.loadMovies { result in
             // Then
             switch result {
-                case .success(let movies)
-                // сравниваем данные с тем, что мы рассчитывали получить
+            case .success(let movies):
+                // давайте проверим, что пришло, например, два фильма — ведь в тестовых данных их всего два
+                XCTAssertEqual(movies.items.count, 2)
                 expectation.fulfill()
                 
-            case .failure(_) {
+            case .failure(_):
                 XCTFail("Unexpected failure") // Эта функция проваливает тест
-            }
-                
             }
         }
         waitForExpectations(timeout: 1)
@@ -48,16 +48,16 @@ struct StubNetworkClient: NetworkRoutingProtocol {
     enum TestError: Error {
         case test // тестовая ошибка
     }
-        
-        let emulateError: Bool // нужен, чтобы заглушка эмулировала либо ошибку сети, либо успешный ответ
-        
-        func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
-            if emulateError {
-                handler(.failure(TestError.test))
-            } else {
-                handler(.success(expectedResponse))
-            }
+    
+    let emulateError: Bool // нужен, чтобы заглушка эмулировала либо ошибку сети, либо успешный ответ
+    
+    func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
+        if emulateError {
+            handler(.failure(TestError.test))
+        } else {
+            handler(.success(expectedResponse))
         }
+    }
     private var expectedResponse: Data {
         """
         {
@@ -89,6 +89,6 @@ struct StubNetworkClient: NetworkRoutingProtocol {
                       }
                     ]
                   }
-        """.data(using: utf8)
+        """.data(using: .utf8) ?? Data()
     }
 }
