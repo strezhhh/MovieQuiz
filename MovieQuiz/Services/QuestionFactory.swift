@@ -130,7 +130,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 guard let self = self else { return }
                 self.delegate?.didReceiveNextQuestion(question: question)
             }
-            print("Отправляем следующий вопрос на отображение")
         }
     }
     
