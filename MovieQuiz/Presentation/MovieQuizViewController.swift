@@ -291,7 +291,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             completion: { [weak self] in
                 guard let self else { return }
                 self.questionFactory?.loadData()
-                self.questionFactory?.requestNextQuestion()
                 self.showLoadingIndicator()
             }
         )
