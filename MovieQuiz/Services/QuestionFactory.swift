@@ -15,61 +15,61 @@ final class QuestionFactory: QuestionFactoryProtocol {
     
     private let moviesLoader: MoviesLoading
     private var movies: [MostPopularMovie] = []
-
+    
     private let logger = Logger(label: "MovieQuiz")
     
     // Массив моковых вопросов
     // private let questions: [QuizQuestion] = [
-        //            QuizQuestion(
-        //                imageName: "The Godfather",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: true),
-        //
-        //            QuizQuestion(
-        //                imageName: "The Dark Knight",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: true),
-        //
-        //            QuizQuestion(
-        //                imageName: "Kill Bill",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: true),
-        //
-        //            QuizQuestion(
-        //                imageName: "The Avengers",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: true),
-        //
-        //            QuizQuestion(
-        //                imageName: "Deadpool",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: true),
-        //
-        //            QuizQuestion(
-        //                imageName: "The Green Knight",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: true),
-        //
-        //            QuizQuestion(
-        //                imageName: "Old",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: false),
-        //
-        //            QuizQuestion(
-        //                imageName: "The Ice Age Adventures of Buck Wild",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: false),
-        //
-        //            QuizQuestion(
-        //                imageName: "Tesla",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: false),
-        //
-        //            QuizQuestion(
-        //                imageName: "Vivarium",
-        //                text: "Рейтинг этого фильма больше чем 6?",
-        //                correctAnswer: false)
-        //    ]
+    //            QuizQuestion(
+    //                imageName: "The Godfather",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: true),
+    //
+    //            QuizQuestion(
+    //                imageName: "The Dark Knight",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: true),
+    //
+    //            QuizQuestion(
+    //                imageName: "Kill Bill",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: true),
+    //
+    //            QuizQuestion(
+    //                imageName: "The Avengers",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: true),
+    //
+    //            QuizQuestion(
+    //                imageName: "Deadpool",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: true),
+    //
+    //            QuizQuestion(
+    //                imageName: "The Green Knight",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: true),
+    //
+    //            QuizQuestion(
+    //                imageName: "Old",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: false),
+    //
+    //            QuizQuestion(
+    //                imageName: "The Ice Age Adventures of Buck Wild",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: false),
+    //
+    //            QuizQuestion(
+    //                imageName: "Tesla",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: false),
+    //
+    //            QuizQuestion(
+    //                imageName: "Vivarium",
+    //                text: "Рейтинг этого фильма больше чем 6?",
+    //                correctAnswer: false)
+    //    ]
     
     // MARK: - Delegates
     
@@ -114,9 +114,9 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 }
                 return
             }
-
+            
             let rating = Float(movie.rating ?? "0") ?? 0
-
+            
             let rank = Int.random(in: (7...9))
             let text = "Рейтинг этого фильма больше чем \(rank)?"
             let correctAnswer = rating > Float(rank)

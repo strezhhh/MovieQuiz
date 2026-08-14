@@ -140,7 +140,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         questionFactory.didSetDelegate(self)
         questionFactory.loadData()
         guard let currentQuestion else {return}
-            show(quiz: convert(model: currentQuestion))
+        show(quiz: convert(model: currentQuestion))
     }
     
     // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
