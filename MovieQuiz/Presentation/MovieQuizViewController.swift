@@ -104,15 +104,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         showNetworkError(title: "Ошибка!", message: error.localizedDescription)
     }
     
-    // Метод сообщит, что не получилось скастить Data в UIImage
-    func didFailToLoadImage(with error: Error) {
-        showNetworkError(title: "Ошибка загрузки постера!", message: error.localizedDescription)
+    // Метод сообщит, что пользователь не увидел изображение
+    func didFailToLoadImage() {
+        showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
     }
     
-    // Тестовый метод оповещения о плохой картинке
-    func didFailToLoadUIImage(with message: String) {
-        showNetworkError(title: "Ошибка загрузки постера!", message: message)
-    }
     
     // MARK: - AlertPresenterDelegate
     
@@ -294,9 +290,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             buttonText: "Попробовать еще раз",
             completion: { [weak self] in
                 guard let self else { return }
-                self.currentQuestionIndex = 0
-                self.correctAnswers = 0
-                //self.questionFactory?.loadData()
+                self.questionFactory?.loadData()
                 self.questionFactory?.requestNextQuestion()
                 self.showLoadingIndicator()
             }

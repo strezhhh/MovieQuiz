@@ -96,28 +96,28 @@ final class QuestionFactory: QuestionFactoryProtocol {
             var imageData = Data()
             do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
-                guard let image = UIImage(data: imageData) else {
-                    print("Ошибка кастинга изображения")
-                    
+                // Проверяем, что данные это картинка
+                guard UIImage(data: imageData) != nil else {
+                    print("Данные не картинка")
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
-                        self.delegate?.didFailToLoadUIImage(with: "Ошибка кастинга изображения")
+                        self.delegate?.didFailToLoadImage()
                     }
                     return
                 }
-                    print("Изображения скастилось")
             } catch {
+                print("нет данных")
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     logger.error("Failed to load image", metadata: ["error": "\(error)"])
-                    self.delegate?.didFailToLoadImage(with: error)
-                    return
+                    self.delegate?.didFailToLoadImage()
                 }
+                return
             }
-            print("еще вопрос")
+
             let rating = Float(movie.rating ?? "0") ?? 0
 
-            let rank = Int.random(in: (5...8))
+            let rank = Int.random(in: (7...9))
             let text = "Рейтинг этого фильма больше чем \(rank)?"
             let correctAnswer = rating > Float(rank)
             
@@ -130,6 +130,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 guard let self = self else { return }
                 self.delegate?.didReceiveNextQuestion(question: question)
             }
+            print("Отправляем следующий вопрос на отображение")
         }
     }
     
