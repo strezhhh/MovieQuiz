@@ -65,25 +65,15 @@ final class MovieQuizUITests: XCTestCase {
     func testAlertPresenter() {
         sleep(3)
         
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
-        sleep(2)
-        app.buttons["No"].tap()
+        for i in 1...10 {
+            if i % 2 == 0 {
+                sleep(2)
+                app.buttons["Нет"].tap()
+            } else {
+                sleep(2)
+                app.buttons["Да"].tap()
+            }
+        }
         
         sleep(3)
         
