@@ -11,6 +11,7 @@ final class MovieQuizUITests: XCTestCase {
 
     var app: XCUIApplication!
     
+    
     override func setUpWithError() throws {
         try super.setUpWithError()
         
@@ -28,10 +29,19 @@ final class MovieQuizUITests: XCTestCase {
     }
 
     func testYesButton() {
+        
+        sleep(3)
         let firstPoster = app.images["Poster"]
+        let firstPosterData = firstPoster.screenshot().pngRepresentation
+        // XCTAssertTrue(firstPoster.exists) // это лишнее, так как мы проверяем побайтово два скрина
+        sleep(10)
+        // вот тут отключал интернет и тест проходил без ошибок
         app.buttons["Yes"].tap()
+        sleep(3)
         let secondPoster = app.images["Poster"]
-        XCTAssertFalse(firstPoster == secondPoster)
+        let secondPosterData = secondPoster.screenshot().pngRepresentation
+        XCTAssertTrue(secondPoster.exists)
+        XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
 
     
