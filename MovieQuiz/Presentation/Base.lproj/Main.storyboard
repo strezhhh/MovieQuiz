@@ -67,7 +67,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjL-AW-Gqu" userLabel="noButton">
                                                 <rect key="frame" x="0.0" y="0.0" width="166.66666666666666" height="60"/>
                                                 <color key="backgroundColor" name="YP White"/>
-                                                <accessibility key="accessibilityConfiguration">
+                                                <accessibility key="accessibilityConfiguration" identifier="No">
                                                     <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
                                                 </accessibility>
                                                 <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
