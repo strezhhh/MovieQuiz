@@ -17,9 +17,7 @@ final class MovieQuizUITests: XCTestCase {
         app = XCUIApplication()
         continueAfterFailure = false
         
-        // это специальная настройка для тестов: если один тест не прошёл,
-        // то следующие тесты запускаться не будут; и правда, зачем ждать?
-        continueAfterFailure = false
+        app.launch() // Вот этой строчки кода нет в теории, пришлось спросить ии-ку
 
     }
 
@@ -28,9 +26,14 @@ final class MovieQuizUITests: XCTestCase {
         app.terminate()
         app = nil
     }
-    
-    func testScreenCast() throws {
 
+    func testYesButton() {
+        let firstPoster = app.images["Poster"]
+        app.buttons["Yes"].tap()
+        let secondPoster = app.images["Poster"]
+        XCTAssertFalse(firstPoster == secondPoster)
     }
 
+    
+    
 }
