@@ -52,7 +52,7 @@ final class MovieQuizUITests: XCTestCase {
         sleep(3)
         let secondPoster = app.images["Poster"]
         let secondPosterData = secondPoster.screenshot().pngRepresentation
-        XCTAssertEqual(firstPosterData, secondPosterData)
+        XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
     
 //    func testIndexLabel() {
