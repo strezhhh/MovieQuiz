@@ -40,7 +40,10 @@ final class MovieQuizUITests: XCTestCase {
         sleep(3)
         let secondPoster = app.images["Poster"]
         let secondPosterData = secondPoster.screenshot().pngRepresentation
-        XCTAssertTrue(secondPoster.exists)
+        //XCTAssertTrue(secondPoster.exists)
+        let indexLabel = app.staticTexts["Index"]
+        
+        XCTAssertEqual(indexLabel.label, "2/10")
         XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
 
@@ -52,12 +55,15 @@ final class MovieQuizUITests: XCTestCase {
         sleep(3)
         let secondPoster = app.images["Poster"]
         let secondPosterData = secondPoster.screenshot().pngRepresentation
+        
+        let indexLabel = app.staticTexts["Index"]
+        
+        XCTAssertEqual(indexLabel.label, "2/10")
         XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
     
 //    func testIndexLabel() {
-//        let indexLabel = app.staticTexts["Index"]
-//        XCTAssertEqual(indexLabel.label, "2/10")
+//
 //    }
     
     
