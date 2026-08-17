@@ -11,6 +11,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     @IBOutlet private weak var noButton: UIButton!
     @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - IBActions
     
@@ -56,6 +57,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Переменная хранящая статистику квизов
     private var statisticService: StatisticServiceProtocol?
     
+    // Переменная хранящая модель для Network error
+    private var networkError: AlertModel?
+    
+    // Переменная хранит загрузчик данных по сети
+    private var moviesLoader: MoviesLoader?
+    
     
     
     // MARK: - Lifecycle
@@ -63,9 +70,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupQuestionFactory()
         setupAlertPresenter()
         setupStatisticService()
+        showLoadingIndicator()
+        setupQuestionFactory()
+        setButtonsIsEnabled(to: false)
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -77,10 +86,29 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         }
         currentQuestion = question
         let viewModel = convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.show(quiz: viewModel)
+        DispatchQueue.main.async {
+            self.show(quiz: viewModel)
         }
+        setButtonsIsEnabled(to: true)
+        hideBorder()
     }
+    
+    // Метод сообщит о получении данных с сервера
+    func didLoadDataFromServer() {
+        hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+    
+    // Метод сообщит о получении ошибки с сервера
+    func didFailToLoadData(with error: Error) {
+        showNetworkError(title: "Ошибка!", message: error.localizedDescription)
+    }
+    
+    // Метод сообщит, что пользователь не увидел изображение
+    func didFailToLoadImage() {
+        showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
+    }
+    
     
     // MARK: - AlertPresenterDelegate
     
@@ -102,18 +130,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         questionTitleLabel.text = SetUI.tittleLabelText
         indexLabel.font = Fonts.ysDisplayMedium20
         previewImageView.layer.cornerRadius = CGFloat(SetUI.imageViewCornerRadius)
+        activityIndicator.hidesWhenStopped = true
     }
     
-    // Метод инициализации фабрики вопросов и установки делегата
+    // Метод инициализации фабрики вопросов, установки делегата и инициации загрузки данных из сети
     private func setupQuestionFactory() {
-        questionFactory = QuestionFactory()
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
         guard let questionFactory else { return }
         questionFactory.didSetDelegate(self)
-        self.questionFactory = questionFactory
-        questionFactory.requestNextQuestion()
-        if let firstQuestion = currentQuestion {
-            show(quiz: convert(model: firstQuestion))
-        }
+        questionFactory.loadData()
+        guard let currentQuestion else {return}
+        show(quiz: convert(model: currentQuestion))
     }
     
     // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
@@ -129,12 +156,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         statisticService = StatisticService()
     }
     
+    
     // MARK: - Private Methods
     
     // Метод конвертации из структуры вопроса во вью модель
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         QuizStepViewModel(
-            image: UIImage(named: model.imageName) ?? UIImage(),
+            image: UIImage(data: model.imageData) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
         )
@@ -145,7 +173,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         indexLabel.text = "\(step.questionNumber)"
         previewImageView.image = step.image
         questionLabel.text = step.question
-        setButtonsIsEnabled(to: true)
     }
     
     // Метод показывает обводку. Вызывается в методе showAnswerResult()
@@ -194,7 +221,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private func calledWhenNeedShowNextQuestion() {
         currentQuestionIndex += 1
         questionFactory?.requestNextQuestion()
-        hideBorder()
     }
     
     
@@ -207,7 +233,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод обновляет данные для статистики
     private func updateStatistic(){
-
+        
         guard let statisticService else { return }
         statisticService.store(correct: correctAnswers, total: questionsAmount)
     }
@@ -237,12 +263,42 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
                 self.restartGame()
             }
         )
-
+        
         guard let alertPresenter else { return }
         alertPresenter.show(viewController: self, with: resultQuiz)
     }
     
+    // Метод отображения индикатора загрузки
+    private func showLoadingIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideLoadingIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    // Метод формирования сообщения об ошибке получения данных по сети
+    private func showNetworkError(title: String, message: String) {
+        hideLoadingIndicator()
+        
+        networkError = AlertModel (
+            title: title,
+            message: message,
+            buttonText: "Попробовать еще раз",
+            completion: { [weak self] in
+                guard let self else { return }
+                self.questionFactory?.loadData()
+                self.showLoadingIndicator()
+            }
+        )
+        
+        guard let alertPresenter else { return }
+        alertPresenter.show(viewController: self, with: networkError)
+    }
+    
 }
-
 
 

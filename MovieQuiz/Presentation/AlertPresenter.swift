@@ -28,7 +28,9 @@ final class AlertPresenter: AlertPresenterProtocol {
         }
         
         alert.addAction(action)
-        viewController.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            viewController.present(alert, animated: true, completion: nil)
+        }
         
     }
     

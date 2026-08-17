@@ -11,4 +11,5 @@ import Foundation
 protocol QuestionFactoryProtocol {
     func requestNextQuestion()
     func didSetDelegate(_ delegate: QuestionFactoryDelegate?)
+    func loadData()
 }

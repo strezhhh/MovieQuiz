@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		A91727C72FF68CCD00AECFA7 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A91727C52FF68CCD00AECFA7 /* YS Display-Bold.ttf */; };
 		A91727C82FF68CCD00AECFA7 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A91727C62FF68CCD00AECFA7 /* YS Display-Medium.ttf */; };
+		A9180C6E302BE1C800A3B6B6 /* InMemoryLogging in Frameworks */ = {isa = PBXBuildFile; productRef = A9180C6D302BE1C800A3B6B6 /* InMemoryLogging */; };
+		A9180C70302BE1C800A3B6B6 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = A9180C6F302BE1C800A3B6B6 /* Logging */; };
 		A94503B43018230300B9B53D /* StatisticServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94503B33018230300B9B53D /* StatisticServiceProtocol.swift */; };
 		A94503B8301827F900B9B53D /* GameResultsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94503B7301827F900B9B53D /* GameResultsModel.swift */; };
 		A94503EC301857E500B9B53D /* StatisticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94503EB301857E500B9B53D /* StatisticService.swift */; };
@@ -23,6 +25,10 @@
 		A98EB7BA3011F84200E6F85F /* AlertPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98EB7B93011F84200E6F85F /* AlertPresenterDelegate.swift */; };
 		A9DB0482301E6CF000F88E1D /* FontsCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB0481301E6CF000F88E1D /* FontsCustom.swift */; };
 		A9DB0484301E6ED100F88E1D /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB0483301E6ED100F88E1D /* UISettings.swift */; };
+		A9FAD72D3028F054005E5F26 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD72C3028F054005E5F26 /* NetworkClient.swift */; };
+		A9FAD72F3029B62B005E5F26 /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD72E3029B62B005E5F26 /* MostPopularMovies.swift */; };
+		A9FAD7333029BEF4005E5F26 /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD7323029BEF4005E5F26 /* MoviesLoader.swift */; };
+		A9FAD735302B266C005E5F26 /* MoviesLoaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD734302B266C005E5F26 /* MoviesLoaderProtocol.swift */; };
 		AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB12831907B00B3E448 /* AppDelegate.swift */; };
 		AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */; };
 		AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */; };
@@ -51,6 +57,10 @@
 		A98EB7B93011F84200E6F85F /* AlertPresenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterDelegate.swift; sourceTree = "<group>"; };
 		A9DB0481301E6CF000F88E1D /* FontsCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsCustom.swift; sourceTree = "<group>"; };
 		A9DB0483301E6ED100F88E1D /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
+		A9FAD72C3028F054005E5F26 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		A9FAD72E3029B62B005E5F26 /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
+		A9FAD7323029BEF4005E5F26 /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
+		A9FAD734302B266C005E5F26 /* MoviesLoaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoaderProtocol.swift; sourceTree = "<group>"; };
 		AD1ABAAE2831907B00B3E448 /* MovieQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1ABAB12831907B00B3E448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD1ABAB32831907B00B3E448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9180C70302BE1C800A3B6B6 /* Logging in Frameworks */,
+				A9180C6E302BE1C800A3B6B6 /* InMemoryLogging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +96,7 @@
 				A94503B7301827F900B9B53D /* GameResultsModel.swift */,
 				A9DB0481301E6CF000F88E1D /* FontsCustom.swift */,
 				A9DB0483301E6ED100F88E1D /* UISettings.swift */,
+				A9FAD72E3029B62B005E5F26 /* MostPopularMovies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -96,6 +109,9 @@
 				A98EB7A93011D36100E6F85F /* QuestionFactoryDelegate.swift */,
 				A94503B33018230300B9B53D /* StatisticServiceProtocol.swift */,
 				A94503EB301857E500B9B53D /* StatisticService.swift */,
+				A9FAD72C3028F054005E5F26 /* NetworkClient.swift */,
+				A9FAD7323029BEF4005E5F26 /* MoviesLoader.swift */,
+				A9FAD734302B266C005E5F26 /* MoviesLoaderProtocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -217,6 +233,9 @@
 				Base,
 			);
 			mainGroup = AD1ABAA52831907B00B3E448;
+			packageReferences = (
+				A9180C6C302BE1C800A3B6B6 /* XCLocalSwiftPackageReference "../../Desktop/@YaPrac_iOsDev/swift-log-main" */,
+			);
 			productRefGroup = AD1ABAAF2831907B00B3E448 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -247,16 +266,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
+				A9FAD735302B266C005E5F26 /* MoviesLoaderProtocol.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				A94503EC301857E500B9B53D /* StatisticService.swift in Sources */,
 				A94503B8301827F900B9B53D /* GameResultsModel.swift in Sources */,
 				A98EB7A6300D630A00E6F85F /* QuestionFactoryProtocol.swift in Sources */,
+				A9FAD72F3029B62B005E5F26 /* MostPopularMovies.swift in Sources */,
 				A98EB7BA3011F84200E6F85F /* AlertPresenterDelegate.swift in Sources */,
 				A94503B43018230300B9B53D /* StatisticServiceProtocol.swift in Sources */,
 				A98EB7B83011F80F00E6F85F /* AlertPresenterProtocol.swift in Sources */,
 				A9DB0482301E6CF000F88E1D /* FontsCustom.swift in Sources */,
+				A9FAD7333029BEF4005E5F26 /* MoviesLoader.swift in Sources */,
 				A98EB7AA3011D36100E6F85F /* QuestionFactoryDelegate.swift in Sources */,
 				A98EB7B03011EADB00E6F85F /* AlertModel.swift in Sources */,
+				A9FAD72D3028F054005E5F26 /* NetworkClient.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
 				A98EB7A0300C365800E6F85F /* QuizStepViewModel.swift in Sources */,
 				A98EB7A4300C367100E6F85F /* QuizQuestion.swift in Sources */,
@@ -491,6 +514,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A9180C6C302BE1C800A3B6B6 /* XCLocalSwiftPackageReference "../../Desktop/@YaPrac_iOsDev/swift-log-main" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Desktop/@YaPrac_iOsDev/swift-log-main";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A9180C6D302BE1C800A3B6B6 /* InMemoryLogging */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = InMemoryLogging;
+		};
+		A9180C6F302BE1C800A3B6B6 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Logging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AD1ABAA62831907B00B3E448 /* Project object */;
 }
