@@ -36,12 +36,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Переменная с количеством верных ответов
     private var correctAnswers: Int = 0
     
-    // Переменная с индексом текущего вопроса
-    private var currentQuestionIndex: Int = 0
-    
-    // Общее количество вопросов для Квиза
-    private let questionsAmount: Int = 10
-    
     // Фабрика вопросов в которую будет обращаться Контролер
     private var questionFactory: QuestionFactoryProtocol?
     
