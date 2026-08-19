@@ -11,6 +11,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     // MARK: - Properties
     
+    // Переменная хранящая статистику квизов
+    var statisticService: StatisticServiceProtocol?
+    
     // Фабрика вопросов в которую будет обращаться Контролер
     var questionFactory: QuestionFactoryProtocol?
     
@@ -54,7 +57,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 
     // Метод вызовет инициализацию фабрики вопросов
     init() {
+        setupStatisticService()
         setupQuestionFactory()
+    }
+    
+    // Метод инициализации переменной statisticService
+    private func setupStatisticService() {
+        statisticService = StatisticService()
     }
     
     // Метод инициализации фабрики вопросов, установки делегата и инициации загрузки данных из сети
@@ -69,11 +78,17 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     // MARK: - Methods
     
+    // Метод обновления статистики
+    private func updateStatistic(){
+        guard let statisticService else { return }
+        statisticService.store(correct: self.correctAnswers, total: self.questionsAmount)
+    }
+    
     // Метод либо ведет на экран результатов либо на следующий вопрос
     func showNextQuestionOrResults() {
         if self.isLastQuestions() {
-            viewController?.updateStatistic()
-            guard let statisticService = viewController?.statisticService else { return }
+            updateStatistic()
+            guard let statisticService = self.statisticService else { return }
                 // Меняем формат даты под нужный формат dd.MM.yy HH:mm
                 let dateFormatter: DateFormatter = {
                     let formatter = DateFormatter()

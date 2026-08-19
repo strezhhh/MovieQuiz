@@ -30,9 +30,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     var alertPresenter: AlertPresenterProtocol?
     
-    // Переменная хранящая статистику квизов
-    var statisticService: StatisticServiceProtocol?
-    
     // Переменная хранящая модель для Network error
     private var networkError: AlertModel?
     
@@ -51,7 +48,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         super.viewDidLoad()
         setupUI()
         setupAlertPresenter()
-        setupStatisticService()
         showLoadingIndicator()
         setButtonsIsEnabled(to: false)
     }
@@ -85,11 +81,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         guard let alertPresenter else { return }
         alertPresenter.didSetDelegate(self)
         self.alertPresenter = alertPresenter
-    }
-    
-    // Метод инициализации переменной statisticService
-    private func setupStatisticService() {
-        statisticService = StatisticService()
     }
     
     
@@ -133,13 +124,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     func setButtonsIsEnabled(to newStatus: Bool) {
         noButton.isEnabled = newStatus
         yesButton.isEnabled = newStatus
-    }
-    
-    // Метод обновляет данные для статистики
-    func updateStatistic(){
-        
-        guard let statisticService else { return }
-        statisticService.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
     }
     
     // Метод отображения индикатора загрузки
