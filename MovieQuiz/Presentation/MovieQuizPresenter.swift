@@ -34,6 +34,8 @@ final class MovieQuizPresenter {
         let viewModel = convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.show(quiz: viewModel)
+            self?.viewController?.setButtonsIsEnabled(to: true)
+            self?.viewController?.hideBorder()
         }
     }
     

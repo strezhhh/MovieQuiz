@@ -71,8 +71,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
     func didReceiveNextQuestion(question: QuizQuestion?) {
         presenter.didReceiveNextQuestion(question: question)
-        setButtonsIsEnabled(to: true)
-        hideBorder()
     }
     
     // Метод сообщит о получении данных с сервера
