@@ -12,7 +12,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     // MARK: - Properties
     
     // Переменная хранящая статистику квизов
-    var statisticService: StatisticServiceProtocol?
+    private var statisticService: StatisticServiceProtocol?
     
     // Фабрика вопросов в которую будет обращаться Контролер
     var questionFactory: QuestionFactoryProtocol?
@@ -30,10 +30,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private var currentQuestionIndex: Int = 0
     
     // Общее количество вопросов для Квиза
-    let questionsAmount: Int = 10
+    private let questionsAmount: Int = 10
     
     // Вопрос который видит пользователь
-    var currentQuestion: QuizQuestion?
+    private var currentQuestion: QuizQuestion?
     
     // MARK: - QuestionFactoryDelegate
     
