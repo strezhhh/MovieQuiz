@@ -22,10 +22,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод вызывается когда юзер нажимает кнопку "Нет"
     @IBAction private func didTapNoButton(_ sender: Any) {
-        guard let currentQuestion = presenter.currentQuestion else {
-            return
-        }
-        showAnswerResult(isCorrect: !currentQuestion.correctAnswer)
+        presenter.didTapNoButton()
     }
     
     // MARK: - Properties

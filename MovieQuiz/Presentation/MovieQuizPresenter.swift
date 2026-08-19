@@ -33,6 +33,14 @@ final class MovieQuizPresenter {
         viewController?.showAnswerResult(isCorrect: currentQuestion.correctAnswer)
     }
     
+    // Метод вызывается когда юзер нажимает кнопку "Нет"
+    func didTapNoButton() {
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        viewController?.showAnswerResult(isCorrect: !currentQuestion.correctAnswer)
+    }
+    
     // Метод проверяет является ли текущий вопрос последним
     func isLastQuestions() -> Bool {
         currentQuestionIndex == questionsAmount - 1
