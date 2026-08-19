@@ -63,6 +63,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Переменная хранит загрузчик данных по сети
     private var moviesLoader: MoviesLoader?
     
+    //
+    private let presenter = MovieQuizPresenter()
+    
     
     
     // MARK: - Lifecycle
@@ -85,7 +88,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             return
         }
         currentQuestion = question
-        let viewModel = convert(model: question)
+        let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async {
             self.show(quiz: viewModel)
         }
@@ -159,19 +162,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // MARK: - Private Methods
     
-    // Метод конвертации из структуры вопроса во вью модель
-    private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        QuizStepViewModel(
-            image: UIImage(data: model.imageData) ?? UIImage(),
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
-        )
-    }
-    
     // Метод отображения информации на экране
     private func show(quiz step: QuizStepViewModel) {
         indexLabel.text = "\(step.questionNumber)"
-        previewImageView.image = step.image
+        previewImageView.image = UIImage(data: step.imageData) ?? UIImage()
         questionLabel.text = step.question
     }
     
