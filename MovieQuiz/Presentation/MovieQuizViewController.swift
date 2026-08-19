@@ -179,29 +179,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         yesButton.isEnabled = newStatus
     }
     
-//    // Метод либо ведет на экран результатов либо на следующий вопрос
-//    private func showNextQuestionOrResults() {
-//        if presenter.isLastQuestions() {
-//            calledWhenNeedShowResults()
-//        } else {
-//            calledWhenNeedShowNextQuestion()
-//        }
-//    }
-    
-//    // Метод вызывается, когда нужно показать следующий вопрос
-//    private func calledWhenNeedShowNextQuestion() {
-//        presenter.switchToNextQuestion()
-//        questionFactory?.requestNextQuestion()
-//    }
-    
-    
-//    // Метод вызывается, когда нужно показать Результат Квиза
-//    private func calledWhenNeedShowResults () {
-//        updateStatistic()
-//        preparingAlertMessage()
-//    }
-    
-    
     // Метод обновляет данные для статистики
     func updateStatistic(){
         
