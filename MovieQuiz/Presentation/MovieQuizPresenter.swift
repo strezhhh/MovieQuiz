@@ -55,7 +55,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     // MARK: - Private Initialization Methods
 
-    // Метод вызовет инициализацию фабрики вопросов
+    // Метод вызовет инициализацию необходимых сущностей
     init() {
         setupStatisticService()
         setupQuestionFactory()
