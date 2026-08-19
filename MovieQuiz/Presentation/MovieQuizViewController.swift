@@ -14,18 +14,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - IBActions
-    
-    // Метод вызывается когда юзер нажимает кнопку "Да"
-    @IBAction private func didTapYesButton(_ sender: Any) {
-        guard let currentQuestions = currentQuestion else {
-            return
-        }
-        showAnswerResult(isCorrect: currentQuestions.correctAnswer)
-    }
-    
+        
     // Метод вызывается когда юзер нажимает кнопку "Нет"
     @IBAction private func didTapNoButton(_ sender: Any) {
-        guard let currentQuestions = currentQuestion else {
+        guard let currentQuestions = presenter.currentQuestion else {
             return
         }
         showAnswerResult(isCorrect: !currentQuestions.correctAnswer)
@@ -38,10 +30,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Фабрика вопросов в которую будет обращаться Контролер
     private var questionFactory: QuestionFactoryProtocol?
-    
-    // Вопрос который видит пользователь
-    private var currentQuestion: QuizQuestion?
-    
+        
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     private var alertPresenter: AlertPresenterProtocol?
     
@@ -65,6 +54,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
+        presenter.viewController = self
         super.viewDidLoad()
         setupUI()
         setupAlertPresenter()
@@ -81,7 +71,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         guard let question else {
             return
         }
-        currentQuestion = question
+        presenter.currentQuestion = question
         let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async {
             self.show(quiz: viewModel)
@@ -136,7 +126,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         guard let questionFactory else { return }
         questionFactory.didSetDelegate(self)
         questionFactory.loadData()
-        guard let currentQuestion else {return}
+        guard let currentQuestion = presenter.currentQuestion else {return}
         show(quiz: presenter.convert(model: currentQuestion))
     }
     
@@ -178,7 +168,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // Метод отображения корректности ответа
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }

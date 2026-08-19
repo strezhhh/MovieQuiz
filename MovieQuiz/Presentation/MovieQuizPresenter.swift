@@ -11,13 +11,27 @@ final class MovieQuizPresenter {
     
     // MARK: - Properties
     
+    // Слабая ссылка на MovieQuizViewController
+    weak var viewController: MovieQuizViewController?
+    
     // Переменная с индексом текущего вопроса
     private var currentQuestionIndex: Int = 0
     
     // Общее количество вопросов для Квиза
     let questionsAmount: Int = 10
     
+    // Вопрос который видит пользователь
+    var currentQuestion: QuizQuestion?
+    
     // MARK: - Methods
+    
+    // Метод вызывается когда юзер нажимает кнопку "Да"
+    @IBAction private func didTapYesButton(_ sender: Any) {
+        guard let currentQuestions = currentQuestion else {
+            return
+        }
+        viewController?.showAnswerResult(isCorrect: currentQuestions.correctAnswer)
+    }
     
     // Метод проверяет является ли текущий вопрос последним
     func isLastQuestions() -> Bool {
