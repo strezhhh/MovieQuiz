@@ -112,7 +112,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
     // и юзер нажал кнопку "Сыграть еще раз"
     func restartGame() {
-        currentQuestionIndex = 0
+        presenter.resetQuestionIndex()
         correctAnswers = 0
         questionFactory?.requestNextQuestion()
         hideBorder()
@@ -198,7 +198,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод либо ведет на экран результатов либо на следующий вопрос
     private func showNextQuestionOrResults() {
-        if currentQuestionIndex == questionsAmount - 1 {
+        if presenter.isLastQuestions() {
             calledWhenNeedShowResults()
         } else {
             calledWhenNeedShowNextQuestion()
@@ -207,7 +207,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод вызывается, когда нужно показать следующий вопрос
     private func calledWhenNeedShowNextQuestion() {
-        currentQuestionIndex += 1
+        presenter.switchToNextQuestion()
         questionFactory?.requestNextQuestion()
     }
     
@@ -223,7 +223,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private func updateStatistic(){
         
         guard let statisticService else { return }
-        statisticService.store(correct: correctAnswers, total: questionsAmount)
+        statisticService.store(correct: correctAnswers, total: presenter.questionsAmount)
     }
     
     // Метод формирует текст для Алерты на основе данных StatisticService.
@@ -240,7 +240,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         resultQuiz = AlertModel (
             title: "Этот раунд окончен!",
             message: """
-            Ваш результат: \(correctAnswers)/\(questionsAmount)
+            Ваш результат: \(correctAnswers)/\(presenter.questionsAmount)
             Количество сыгранных квизов: \(statisticService.gamesCount)
             Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: statisticService.bestGame.date)))
             Средняя точность: \(statisticService.totalAccuracy)%
