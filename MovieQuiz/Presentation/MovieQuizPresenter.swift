@@ -7,9 +7,12 @@
 
 import Foundation
 
-final class MovieQuizPresenter: QuestionFactoryDelegate {
+final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate {
     
     // MARK: - Properties
+    
+    // Алерта, куда Контролер передаст данные с результатами Квиза.
+    var alertPresenter: AlertPresenterProtocol?
     
     // Переменная хранящая статистику квизов
     private var statisticService: StatisticServiceProtocol?
@@ -53,12 +56,32 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
     }
     
+    // MARK: - AlertPresenterDelegate
+    
+    // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
+    // и юзер нажал кнопку "Сыграть еще раз"
+    func restartGame() {
+        resetQuestionIndex()
+        resetCorrectAnswers()
+        questionFactory?.requestNextQuestion()
+        viewController?.hideBorder()
+    }
+    
     // MARK: - Private Initialization Methods
 
     // Метод вызовет инициализацию необходимых сущностей
     init() {
+        setupAlertPresenter()
         setupStatisticService()
         setupQuestionFactory()
+    }
+    
+    // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
+    private func setupAlertPresenter() {
+        alertPresenter = AlertPresenter()
+        guard let alertPresenter else { return }
+        alertPresenter.didSetDelegate(self)
+        self.alertPresenter = alertPresenter
     }
     
     // Метод инициализации переменной statisticService
@@ -107,12 +130,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
                     buttonText: "Сыграть еще раз",
                     completion: { [weak self] in
                         guard let self else { return }
-                        viewController?.restartGame()
+                        self.restartGame()
                     }
                 )
                 
             guard
-                let alertPresenter = viewController?.alertPresenter,
+                let alertPresenter = alertPresenter,
                 let viewController = self.viewController
                 else { return }
             alertPresenter.show(viewController: viewController, with: resultQuiz)

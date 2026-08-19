@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
+final class MovieQuizViewController: UIViewController {
     
     // MARK: - IBOutlets
     
@@ -26,9 +26,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     }
     
     // MARK: - Properties
-        
-    // Алерта, куда Контролер передаст данные с результатами Квиза.
-    var alertPresenter: AlertPresenterProtocol?
     
     // Переменная хранящая модель для Network error
     private var networkError: AlertModel?
@@ -47,20 +44,8 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         presenter.viewController = self
         super.viewDidLoad()
         setupUI()
-        setupAlertPresenter()
         showLoadingIndicator()
         setButtonsIsEnabled(to: false)
-    }
-        
-    // MARK: - AlertPresenterDelegate
-    
-    // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
-    // и юзер нажал кнопку "Сыграть еще раз"
-    func restartGame() {
-        presenter.resetQuestionIndex()
-        presenter.resetCorrectAnswers()
-        presenter.questionFactory?.requestNextQuestion()
-        hideBorder()
     }
     
     // MARK: - Private Initialization Methods
@@ -74,15 +59,6 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
         previewImageView.layer.cornerRadius = CGFloat(SetUI.imageViewCornerRadius)
         activityIndicator.hidesWhenStopped = true
     }
-    
-    // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
-    private func setupAlertPresenter() {
-        alertPresenter = AlertPresenter()
-        guard let alertPresenter else { return }
-        alertPresenter.didSetDelegate(self)
-        self.alertPresenter = alertPresenter
-    }
-    
     
     // MARK: - Private Methods
     
@@ -153,7 +129,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
             }
         )
         
-        guard let alertPresenter else { return }
+        guard let alertPresenter = presenter.alertPresenter else { return }
         alertPresenter.show(viewController: self, with: networkError)
     }
     
