@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, AlertPresenterDelegate {
+final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     
     // MARK: - IBOutlets
     
@@ -26,9 +26,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // MARK: - Properties
-    
-    // Фабрика вопросов в которую будет обращаться Контролер
-    var questionFactory: QuestionFactoryProtocol?
         
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     var alertPresenter: AlertPresenterProtocol?
@@ -56,34 +53,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setupAlertPresenter()
         setupStatisticService()
         showLoadingIndicator()
-        setupQuestionFactory()
         setButtonsIsEnabled(to: false)
     }
-    
-    // MARK: - QuestionFactoryDelegate
-    
-    // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
-    func didReceiveNextQuestion(question: QuizQuestion?) {
-        presenter.didReceiveNextQuestion(question: question)
-    }
-    
-    // Метод сообщит о получении данных с сервера
-    func didLoadDataFromServer() {
-        hideLoadingIndicator()
-        questionFactory?.requestNextQuestion()
-    }
-    
-    // Метод сообщит о получении ошибки с сервера
-    func didFailToLoadData(with error: Error) {
-        showNetworkError(title: "Ошибка!", message: error.localizedDescription)
-    }
-    
-    // Метод сообщит, что пользователь не увидел изображение
-    func didFailToLoadImage() {
-        showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
-    }
-    
-    
+        
     // MARK: - AlertPresenterDelegate
     
     // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
@@ -91,7 +63,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     func restartGame() {
         presenter.resetQuestionIndex()
         presenter.correctAnswers = 0
-        questionFactory?.requestNextQuestion()
+        presenter.questionFactory?.requestNextQuestion()
         hideBorder()
     }
     
@@ -105,16 +77,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         indexLabel.font = Fonts.ysDisplayMedium20
         previewImageView.layer.cornerRadius = CGFloat(SetUI.imageViewCornerRadius)
         activityIndicator.hidesWhenStopped = true
-    }
-    
-    // Метод инициализации фабрики вопросов, установки делегата и инициации загрузки данных из сети
-    private func setupQuestionFactory() {
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
-        guard let questionFactory else { return }
-        questionFactory.didSetDelegate(self)
-        questionFactory.loadData()
-        guard let currentQuestion = presenter.currentQuestion else {return}
-        show(quiz: presenter.convert(model: currentQuestion))
     }
     
     // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
@@ -181,11 +143,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // Метод отображения индикатора загрузки
-    private func showLoadingIndicator() {
+    func showLoadingIndicator() {
         activityIndicator.startAnimating()
     }
     
-    private func hideLoadingIndicator() {
+    func hideLoadingIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.activityIndicator.stopAnimating()
@@ -193,7 +155,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // Метод формирования сообщения об ошибке получения данных по сети
-    private func showNetworkError(title: String, message: String) {
+    func showNetworkError(title: String, message: String) {
         hideLoadingIndicator()
         
         networkError = AlertModel (
@@ -202,7 +164,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
             buttonText: "Попробовать еще раз",
             completion: { [weak self] in
                 guard let self else { return }
-                self.questionFactory?.loadData()
+                presenter.questionFactory?.loadData()
                 self.showLoadingIndicator()
             }
         )

@@ -7,9 +7,12 @@
 
 import Foundation
 
-final class MovieQuizPresenter {
+final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     // MARK: - Properties
+    
+    // Фабрика вопросов в которую будет обращаться Контролер
+    var questionFactory: QuestionFactoryProtocol?
     
     // Переменная с количеством верных ответов
     var correctAnswers: Int = 0
@@ -28,6 +31,41 @@ final class MovieQuizPresenter {
     
     // Вопрос который видит пользователь
     var currentQuestion: QuizQuestion?
+    
+    // MARK: - QuestionFactoryDelegate
+    
+    // Метод сообщит о получении данных с сервера
+    func didLoadDataFromServer() {
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+    
+    // Метод сообщит о получении ошибки с сервера
+    func didFailToLoadData(with error: Error) {
+        viewController?.showNetworkError(title: "Ошибка!", message: error.localizedDescription)
+    }
+    
+    // Метод сообщит, что пользователь не увидел изображение
+    func didFailToLoadImage() {
+        viewController?.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
+    }
+    
+    // MARK: - Private Initialization Methods
+
+    // Метод вызовет инициализацию фабрики вопросов
+    init() {
+        setupQuestionFactory()
+    }
+    
+    // Метод инициализации фабрики вопросов, установки делегата и инициации загрузки данных из сети
+    private func setupQuestionFactory() {
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader())
+        guard let questionFactory else { return }
+        questionFactory.didSetDelegate(self)
+        questionFactory.loadData()
+        guard let currentQuestion = self.currentQuestion else {return}
+        viewController?.show(quiz: self.convert(model: currentQuestion))
+    }
     
     // MARK: - Methods
     
@@ -64,8 +102,8 @@ final class MovieQuizPresenter {
                 else { return }
             alertPresenter.show(viewController: viewController, with: resultQuiz)
         } else {
-            self.switchToNextQuestion()
-            viewController?.questionFactory?.requestNextQuestion()
+            switchToNextQuestion()
+            questionFactory?.requestNextQuestion()
         }
     }
     
