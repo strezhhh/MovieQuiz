@@ -25,6 +25,17 @@ final class MovieQuizPresenter {
     
     // MARK: - Methods
     
+    // Метод либо ведет на экран результатов либо на следующий вопрос
+    func showNextQuestionOrResults() {
+        if self.isLastQuestions() {
+            viewController?.updateStatistic()
+            viewController?.preparingAlertMessage()
+        } else {
+            switchToNextQuestion()
+            viewController?.questionFactory?.requestNextQuestion()
+        }
+    }
+    
     // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question else {

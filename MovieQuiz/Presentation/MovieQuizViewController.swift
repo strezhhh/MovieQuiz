@@ -31,7 +31,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     private var correctAnswers: Int = 0
     
     // Фабрика вопросов в которую будет обращаться Контролер
-    private var questionFactory: QuestionFactoryProtocol?
+    var questionFactory: QuestionFactoryProtocol?
         
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     private var alertPresenter: AlertPresenterProtocol?
@@ -169,7 +169,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         setButtonsIsEnabled(to: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.showNextQuestionOrResults()
+            presenter.showNextQuestionOrResults()
         }
     }
     
@@ -179,38 +179,38 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         yesButton.isEnabled = newStatus
     }
     
-    // Метод либо ведет на экран результатов либо на следующий вопрос
-    private func showNextQuestionOrResults() {
-        if presenter.isLastQuestions() {
-            calledWhenNeedShowResults()
-        } else {
-            calledWhenNeedShowNextQuestion()
-        }
-    }
+//    // Метод либо ведет на экран результатов либо на следующий вопрос
+//    private func showNextQuestionOrResults() {
+//        if presenter.isLastQuestions() {
+//            calledWhenNeedShowResults()
+//        } else {
+//            calledWhenNeedShowNextQuestion()
+//        }
+//    }
     
-    // Метод вызывается, когда нужно показать следующий вопрос
-    private func calledWhenNeedShowNextQuestion() {
-        presenter.switchToNextQuestion()
-        questionFactory?.requestNextQuestion()
-    }
+//    // Метод вызывается, когда нужно показать следующий вопрос
+//    private func calledWhenNeedShowNextQuestion() {
+//        presenter.switchToNextQuestion()
+//        questionFactory?.requestNextQuestion()
+//    }
     
     
-    // Метод вызывается, когда нужно показать Результат Квиза
-    private func calledWhenNeedShowResults () {
-        updateStatistic()
-        preparingAlertMessage()
-    }
+//    // Метод вызывается, когда нужно показать Результат Квиза
+//    private func calledWhenNeedShowResults () {
+//        updateStatistic()
+//        preparingAlertMessage()
+//    }
     
     
     // Метод обновляет данные для статистики
-    private func updateStatistic(){
+    func updateStatistic(){
         
         guard let statisticService else { return }
         statisticService.store(correct: correctAnswers, total: presenter.questionsAmount)
     }
     
     // Метод формирует текст для Алерты на основе данных StatisticService.
-    private func preparingAlertMessage() {
+    func preparingAlertMessage() {
         
         guard let statisticService else { return }
         // Меняем формат даты под нужный формат dd.MM.yy HH:mm
