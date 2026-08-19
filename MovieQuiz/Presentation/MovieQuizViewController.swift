@@ -70,14 +70,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
     func didReceiveNextQuestion(question: QuizQuestion?) {
-        guard let question else {
-            return
-        }
-        presenter.currentQuestion = question
-        let viewModel = presenter.convert(model: question)
-        DispatchQueue.main.async {
-            self.show(quiz: viewModel)
-        }
+        presenter.didReceiveNextQuestion(question: question)
         setButtonsIsEnabled(to: true)
         hideBorder()
     }
@@ -149,21 +142,21 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // MARK: - Private Methods
     
     // Метод отображения информации на экране
-    private func show(quiz step: QuizStepViewModel) {
+    func show(quiz step: QuizStepViewModel) {
         indexLabel.text = "\(step.questionNumber)"
         previewImageView.image = UIImage(data: step.imageData) ?? UIImage()
         questionLabel.text = step.question
     }
     
     // Метод показывает обводку. Вызывается в методе showAnswerResult()
-    private func showBorder(_ color: CGColor) {
+    func showBorder(_ color: CGColor) {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 8
         previewImageView.layer.borderColor = color
     }
     
     // Метод скрывает обводку. Вызывается в методе showNextQuestionOrResults()
-    private func hideBorder() {
+    func hideBorder() {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 0
         previewImageView.layer.borderColor = UIColor.ypBlack.cgColor
@@ -183,7 +176,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     }
     
     // Метод включает или выключает кнопки "Нет" и "Да"
-    private func setButtonsIsEnabled(to newStatus: Bool) {
+    func setButtonsIsEnabled(to newStatus: Bool) {
         noButton.isEnabled = newStatus
         yesButton.isEnabled = newStatus
     }

@@ -25,6 +25,18 @@ final class MovieQuizPresenter {
     
     // MARK: - Methods
     
+    // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        guard let question else {
+            return
+        }
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+        }
+    }
+    
     // Метод вызывается когда юзер нажимает кнопку "Да"
     func didTapYesButton() {
         didAnswer (guess: true)
