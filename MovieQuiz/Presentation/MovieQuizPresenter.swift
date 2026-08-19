@@ -136,7 +136,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
                 
             guard
                 let alertPresenter = alertPresenter,
-                let viewController = self.viewController
+                let viewController = viewController
                 else { return }
             alertPresenter.show(viewController: viewController, with: resultQuiz)
         } else {
