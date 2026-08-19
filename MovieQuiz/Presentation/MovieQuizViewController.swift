@@ -15,12 +15,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // MARK: - IBActions
         
+    // Метод вызывается когда юзер нажимает кнопку "Да"
+    @IBAction private func didTapYesButton(_ sender: Any) {
+        presenter.didTapYesButton()
+    }
+    
     // Метод вызывается когда юзер нажимает кнопку "Нет"
     @IBAction private func didTapNoButton(_ sender: Any) {
-        guard let currentQuestions = presenter.currentQuestion else {
+        guard let currentQuestion = presenter.currentQuestion else {
             return
         }
-        showAnswerResult(isCorrect: !currentQuestions.correctAnswer)
+        showAnswerResult(isCorrect: !currentQuestion.correctAnswer)
     }
     
     // MARK: - Properties

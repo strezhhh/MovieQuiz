@@ -26,11 +26,11 @@ final class MovieQuizPresenter {
     // MARK: - Methods
     
     // Метод вызывается когда юзер нажимает кнопку "Да"
-    @IBAction private func didTapYesButton(_ sender: Any) {
-        guard let currentQuestions = currentQuestion else {
+    func didTapYesButton() {
+        guard let currentQuestion = currentQuestion else {
             return
         }
-        viewController?.showAnswerResult(isCorrect: currentQuestions.correctAnswer)
+        viewController?.showAnswerResult(isCorrect: currentQuestion.correctAnswer)
     }
     
     // Метод проверяет является ли текущий вопрос последним
