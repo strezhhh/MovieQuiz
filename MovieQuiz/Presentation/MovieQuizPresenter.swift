@@ -27,18 +27,20 @@ final class MovieQuizPresenter {
     
     // Метод вызывается когда юзер нажимает кнопку "Да"
     func didTapYesButton() {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        viewController?.showAnswerResult(isCorrect: currentQuestion.correctAnswer)
+        didAnswer (guess: true)
     }
     
     // Метод вызывается когда юзер нажимает кнопку "Нет"
     func didTapNoButton() {
+        didAnswer (guess: false)
+    }
+    
+    // Метод сравнивает полученный от пользователя ответ с правильным
+    private func didAnswer (guess: Bool) {
         guard let currentQuestion = currentQuestion else {
             return
         }
-        viewController?.showAnswerResult(isCorrect: !currentQuestion.correctAnswer)
+        viewController?.showAnswerResult(isCorrect: guess == currentQuestion.correctAnswer)
     }
     
     // Метод проверяет является ли текущий вопрос последним
