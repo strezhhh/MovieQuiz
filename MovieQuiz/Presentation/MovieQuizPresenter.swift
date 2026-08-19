@@ -11,6 +11,12 @@ final class MovieQuizPresenter {
     
     // MARK: - Properties
     
+    // Переменная с количеством верных ответов
+    var correctAnswers: Int = 0
+    
+    // Переменная хранящая текущие результаты квиза
+    private var resultQuiz: AlertModel?
+    
     // Слабая ссылка на MovieQuizViewController
     weak var viewController: MovieQuizViewController?
     
@@ -29,9 +35,36 @@ final class MovieQuizPresenter {
     func showNextQuestionOrResults() {
         if self.isLastQuestions() {
             viewController?.updateStatistic()
-            viewController?.preparingAlertMessage()
+            guard let statisticService = viewController?.statisticService else { return }
+                // Меняем формат даты под нужный формат dd.MM.yy HH:mm
+                let dateFormatter: DateFormatter = {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "dd.MM.yy HH:mm"
+                    return formatter
+                }()
+                
+                resultQuiz = AlertModel (
+                    title: "Этот раунд окончен!",
+                    message: """
+                    Ваш результат: \(self.correctAnswers)/\(self.questionsAmount)
+                    Количество сыгранных квизов: \(statisticService.gamesCount)
+                    Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: statisticService.bestGame.date)))
+                    Средняя точность: \(statisticService.totalAccuracy)%
+                    """,
+                    buttonText: "Сыграть еще раз",
+                    completion: { [weak self] in
+                        guard let self else { return }
+                        viewController?.restartGame()
+                    }
+                )
+                
+            guard
+                let alertPresenter = viewController?.alertPresenter,
+                let viewController = self.viewController
+                else { return }
+            alertPresenter.show(viewController: viewController, with: resultQuiz)
         } else {
-            switchToNextQuestion()
+            self.switchToNextQuestion()
             viewController?.questionFactory?.requestNextQuestion()
         }
     }

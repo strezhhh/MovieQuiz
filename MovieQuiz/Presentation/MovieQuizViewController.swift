@@ -27,20 +27,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     
     // MARK: - Properties
     
-    // Переменная с количеством верных ответов
-    private var correctAnswers: Int = 0
-    
     // Фабрика вопросов в которую будет обращаться Контролер
     var questionFactory: QuestionFactoryProtocol?
         
     // Алерта, куда Контролер передаст данные с результатами Квиза.
-    private var alertPresenter: AlertPresenterProtocol?
-    
-    // Переменная хранящая текущие результаты квиза
-    private var resultQuiz: AlertModel?
+    var alertPresenter: AlertPresenterProtocol?
     
     // Переменная хранящая статистику квизов
-    private var statisticService: StatisticServiceProtocol?
+    var statisticService: StatisticServiceProtocol?
     
     // Переменная хранящая модель для Network error
     private var networkError: AlertModel?
@@ -96,7 +90,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // и юзер нажал кнопку "Сыграть еще раз"
     func restartGame() {
         presenter.resetQuestionIndex()
-        correctAnswers = 0
+        presenter.correctAnswers = 0
         questionFactory?.requestNextQuestion()
         hideBorder()
     }
@@ -163,7 +157,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     // Метод отображения корректности ответа
     func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
-            correctAnswers += 1
+            presenter.correctAnswers += 1
         }
         showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
         setButtonsIsEnabled(to: false)
@@ -183,37 +177,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
     func updateStatistic(){
         
         guard let statisticService else { return }
-        statisticService.store(correct: correctAnswers, total: presenter.questionsAmount)
-    }
-    
-    // Метод формирует текст для Алерты на основе данных StatisticService.
-    func preparingAlertMessage() {
-        
-        guard let statisticService else { return }
-        // Меняем формат даты под нужный формат dd.MM.yy HH:mm
-        let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd.MM.yy HH:mm"
-            return formatter
-        }()
-        
-        resultQuiz = AlertModel (
-            title: "Этот раунд окончен!",
-            message: """
-            Ваш результат: \(correctAnswers)/\(presenter.questionsAmount)
-            Количество сыгранных квизов: \(statisticService.gamesCount)
-            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: statisticService.bestGame.date)))
-            Средняя точность: \(statisticService.totalAccuracy)%
-            """,
-            buttonText: "Сыграть еще раз",
-            completion: { [weak self] in
-                guard let self else { return }
-                self.restartGame()
-            }
-        )
-        
-        guard let alertPresenter else { return }
-        alertPresenter.show(viewController: self, with: resultQuiz)
+        statisticService.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
     }
     
     // Метод отображения индикатора загрузки
