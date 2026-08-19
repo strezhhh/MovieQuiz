@@ -58,7 +58,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     // и юзер нажал кнопку "Сыграть еще раз"
     func restartGame() {
         presenter.resetQuestionIndex()
-        presenter.correctAnswers = 0
+        presenter.resetCorrectAnswers()
         presenter.questionFactory?.requestNextQuestion()
         hideBorder()
     }
@@ -110,7 +110,7 @@ final class MovieQuizViewController: UIViewController, AlertPresenterDelegate {
     // Метод отображения корректности ответа
     func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
-            presenter.correctAnswers += 1
+            presenter.increaseCorrectAnswers()
         }
         showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
         setButtonsIsEnabled(to: false)

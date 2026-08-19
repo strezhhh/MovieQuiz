@@ -18,7 +18,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     var questionFactory: QuestionFactoryProtocol?
     
     // Переменная с количеством верных ответов
-    var correctAnswers: Int = 0
+    private var correctAnswers: Int = 0
     
     // Переменная хранящая текущие результаты квиза
     private var resultQuiz: AlertModel?
@@ -167,6 +167,16 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     // Метод увеличивает индекс вопросов на 1
     func switchToNextQuestion() {
         currentQuestionIndex += 1
+    }
+    
+    // Метод увеличивает количесво правильных ответов на 1
+    func increaseCorrectAnswers() {
+        correctAnswers += 1
+    }
+    
+    // Метод сбрасывает количество правильных ответов на 0
+    func resetCorrectAnswers() {
+        correctAnswers = 0
     }
     
     // Метод конвертации из структуры вопроса во вью модель
