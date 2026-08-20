@@ -25,6 +25,7 @@
 		A98EB7BA3011F84200E6F85F /* AlertPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98EB7B93011F84200E6F85F /* AlertPresenterDelegate.swift */; };
 		A9B01458302FB77F00764947 /* NetworkRoutingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B01457302FB77F00764947 /* NetworkRoutingProtocol.swift */; };
 		A9B014833036043D00764947 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B014823036043D00764947 /* MovieQuizPresenter.swift */; };
+		A9B014BE3037221A00764947 /* MovieQuizViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B014BD3037221A00764947 /* MovieQuizViewControllerProtocol.swift */; };
 		A9DB0482301E6CF000F88E1D /* FontsCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB0481301E6CF000F88E1D /* FontsCustom.swift */; };
 		A9DB0484301E6ED100F88E1D /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB0483301E6ED100F88E1D /* UISettings.swift */; };
 		A9FAD72D3028F054005E5F26 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD72C3028F054005E5F26 /* NetworkClient.swift */; };
@@ -79,6 +80,7 @@
 		A9B01457302FB77F00764947 /* NetworkRoutingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRoutingProtocol.swift; sourceTree = "<group>"; };
 		A9B0145F302FD4C400764947 /* MovieQuizUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieQuizUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B014823036043D00764947 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
+		A9B014BD3037221A00764947 /* MovieQuizViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizViewControllerProtocol.swift; sourceTree = "<group>"; };
 		A9DB0481301E6CF000F88E1D /* FontsCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsCustom.swift; sourceTree = "<group>"; };
 		A9DB0483301E6ED100F88E1D /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
 		A9FAD72C3028F054005E5F26 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				A98EB7B73011F80F00E6F85F /* AlertPresenterProtocol.swift */,
 				A98EB7B93011F84200E6F85F /* AlertPresenterDelegate.swift */,
 				A9B014823036043D00764947 /* MovieQuizPresenter.swift */,
+				A9B014BD3037221A00764947 /* MovieQuizViewControllerProtocol.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 			files = (
 				A9B01458302FB77F00764947 /* NetworkRoutingProtocol.swift in Sources */,
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
+				A9B014BE3037221A00764947 /* MovieQuizViewControllerProtocol.swift in Sources */,
 				A9FAD735302B266C005E5F26 /* MoviesLoaderProtocol.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				A94503EC301857E500B9B53D /* StatisticService.swift in Sources */,
