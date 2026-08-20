@@ -89,6 +89,7 @@ final class MovieQuizViewController: UIViewController {
         activityIndicator.startAnimating()
     }
     
+    // Метод скрывает индикатор загрузки
     func hideLoadingIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
