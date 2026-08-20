@@ -70,10 +70,10 @@ final class MovieQuizViewController: UIViewController {
     }
     
     // Метод показывает обводку. Вызывается в методе showAnswerResult()
-    func showBorder(_ color: CGColor) {
+    func showBorder(answer: Bool) {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 8
-        previewImageView.layer.borderColor = color
+        previewImageView.layer.borderColor = answer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
     
     // Метод скрывает обводку. Вызывается в методе showNextQuestionOrResults()
@@ -81,19 +81,6 @@ final class MovieQuizViewController: UIViewController {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 0
         previewImageView.layer.borderColor = UIColor.ypBlack.cgColor
-    }
-    
-    // Метод отображения корректности ответа
-    func showAnswerResult(isCorrect: Bool) {
-        if isCorrect {
-            presenter.increaseCorrectAnswers()
-        }
-        showBorder(isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor)
-        setButtonsIsEnabled(to: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            presenter.showNextQuestionOrResults()
-        }
     }
     
     // Метод включает или выключает кнопки "Нет" и "Да"
