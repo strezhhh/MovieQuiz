@@ -8,7 +8,7 @@
 import XCTest
 
 final class MovieQuizUITests: XCTestCase {
-
+    
     var app: XCUIApplication!
     
     
@@ -19,15 +19,15 @@ final class MovieQuizUITests: XCTestCase {
         continueAfterFailure = false
         
         app.launch() // Вот этой строчки кода нет в теории, пришлось спросить ии-ку
-
+        
     }
-
+    
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         app.terminate()
         app = nil
     }
-
+    
     func testYesButton() {
         
         sleep(3)
@@ -46,7 +46,7 @@ final class MovieQuizUITests: XCTestCase {
         XCTAssertEqual(indexLabel.label, "2/10")
         XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
-
+    
     func testNoButton() {
         sleep(3)
         let firstPoster = app.images["Poster"]
@@ -85,9 +85,9 @@ final class MovieQuizUITests: XCTestCase {
         
         let alertButton = alert.buttons.firstMatch.label
         XCTAssertEqual(alertButton, "Сыграть еще раз")
-
+        
     }
-
+    
     func testGameRestart() {
         sleep(3)
         for i in 1...10 {
@@ -105,12 +105,12 @@ final class MovieQuizUITests: XCTestCase {
         alert.buttons.firstMatch.tap()
         
         sleep(3)
-
+        
         XCTAssertFalse(alert.exists)
         
         let indexLabel = app.staticTexts["Index"]
         XCTAssertEqual(indexLabel.label, "1/10")
-    
+        
         
     }
     

@@ -28,7 +28,7 @@ struct MoviesLoader: MoviesLoading {
         }
         return url
     }
-
+    
     
     // MARK: - Methods
     // Метод преобразует полученную от networkClient Data в MostPopularMovies
