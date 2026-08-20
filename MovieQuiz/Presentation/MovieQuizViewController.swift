@@ -30,6 +30,9 @@ final class MovieQuizViewController: UIViewController {
     // Переменная хранит Презентер
     private let presenter = MovieQuizPresenter()
     
+    // Переменная хранящая модель для Network error
+    private var networkError: AlertModel?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -91,6 +94,25 @@ final class MovieQuizViewController: UIViewController {
             guard let self else { return }
             self.activityIndicator.stopAnimating()
         }
+    }
+    
+    // Метод формирования сообщения об ошибке получения данных по сети
+    func showNetworkError(title: String, message: String) {
+        hideLoadingIndicator()
+        
+        networkError = AlertModel (
+            title: title,
+            message: message,
+            buttonText: "Попробовать еще раз",
+            completion: { [weak self] in
+                guard let self else { return }
+                presenter.questionFactory?.loadData()
+                self.showLoadingIndicator()
+            }
+        )
+        
+        guard let alertPresenter = presenter.alertPresenter else { return }
+        alertPresenter.show(viewController: self, with: networkError)
     }
     
 }

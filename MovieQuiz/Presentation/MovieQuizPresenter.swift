@@ -11,12 +11,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // MARK: - Properties
     
-    // Переменная хранит загрузчик данных по сети
-//    private var moviesLoader: MoviesLoader?
-    
-    // Переменная хранящая модель для Network error
-    private var networkError: AlertModel?
-    
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     var alertPresenter: AlertPresenterProtocol?
     
@@ -54,12 +48,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // Метод вызовут если получат ошибку с сервера
     func didFailToLoadData(with error: Error) {
-        self.reportNetworkError(title: "Ошибка!", message: error.localizedDescription)
+        viewController?.showNetworkError(title: "Ошибка!", message: error.localizedDescription)
     }
     
     // Метод вызовут если пользователь не увидел изображение
     func didFailToLoadImage() {
-        self.reportNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
+        viewController?.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
     }
     
     // MARK: - AlertPresenterDelegate
@@ -105,28 +99,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // MARK: - Private Methods
-    
-    // Метод формирования сообщения об ошибке получения данных по сети
-    private func reportNetworkError(title: String, message: String) {
-        viewController?.hideLoadingIndicator()
-        
-        networkError = AlertModel (
-            title: title,
-            message: message,
-            buttonText: "Попробовать еще раз",
-            completion: { [weak self] in
-                guard let self else { return }
-                self.questionFactory?.loadData()
-                viewController?.showLoadingIndicator()
-            }
-        )
-        
-        guard
-            let alertPresenter = self.alertPresenter,
-            let viewController = self.viewController
-            else { return }
-        alertPresenter.show(viewController: viewController, with: networkError)
-    }
     
     // Метод отображения корректности ответа
     private func proceedWithAnswer(isCorrect: Bool) {
