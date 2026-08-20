@@ -27,7 +27,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     private var resultQuiz: AlertModel?
     
     // Слабая ссылка на MovieQuizViewController
-    weak var viewController: MovieQuizViewController?
+    weak var viewController: MovieQuizViewControllerProtocol?
     
     // Переменная с индексом текущего вопроса
     private var currentQuestionIndex: Int = 0
