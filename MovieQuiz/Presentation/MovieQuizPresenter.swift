@@ -102,7 +102,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // MARK: - Methods
     
     // Метод отображения корректности ответа
-    func showAnswerResult(isCorrect: Bool) {
+    func proceedWithAnswer(isCorrect: Bool) {
         if isCorrect {
             increaseCorrectAnswers()
         }
@@ -110,7 +110,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         viewController?.setButtonsIsEnabled(to: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.showNextQuestionOrResults()
+            self.proceedToNextQuestionOrResults()
         }
     }
     
@@ -121,7 +121,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // Метод либо ведет на экран результатов либо на следующий вопрос
-    func showNextQuestionOrResults() {
+    func proceedToNextQuestionOrResults() {
         if self.isLastQuestions() {
             updateStatistic()
             guard let statisticService = self.statisticService else { return }
@@ -187,7 +187,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         guard let currentQuestion = currentQuestion else {
             return
         }
-        self.showAnswerResult(isCorrect: guess == currentQuestion.correctAnswer)
+        self.proceedWithAnswer(isCorrect: guess == currentQuestion.correctAnswer)
     }
     
     // Метод проверяет является ли текущий вопрос последним
