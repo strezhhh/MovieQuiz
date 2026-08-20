@@ -11,6 +11,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // MARK: - Properties
     
+    // Переменная хранит загрузчик данных по сети
+//    private var moviesLoader: MoviesLoader?
+    
     // Переменная хранящая модель для Network error
     private var networkError: AlertModel?
     

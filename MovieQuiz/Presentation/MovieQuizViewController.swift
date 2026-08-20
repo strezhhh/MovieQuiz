@@ -26,17 +26,9 @@ final class MovieQuizViewController: UIViewController {
     }
     
     // MARK: - Properties
-    
-//    // Переменная хранящая модель для Network error
-//    private var networkError: AlertModel?
-    
-    // Переменная хранит загрузчик данных по сети
-    private var moviesLoader: MoviesLoader?
-    
-    //
+        
+    // Переменная хранит Презентер
     private let presenter = MovieQuizPresenter()
-    
-    
     
     // MARK: - Lifecycle
     
@@ -60,7 +52,7 @@ final class MovieQuizViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
     }
     
-    // MARK: - Private Methods
+    // MARK: - Methods
     
     // Метод отображения информации на экране
     func show(quiz step: QuizStepViewModel) {
@@ -102,5 +94,3 @@ final class MovieQuizViewController: UIViewController {
     }
     
 }
-
-
