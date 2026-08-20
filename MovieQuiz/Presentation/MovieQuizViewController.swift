@@ -113,7 +113,7 @@ final class MovieQuizViewController: UIViewController {
         )
         
         guard let alertPresenter = presenter.alertPresenter else { return }
-        alertPresenter.show(viewController: self, with: networkError)
+        alertPresenter.showAlertWithResult(viewController: self, with: networkError)
     }
     
 }

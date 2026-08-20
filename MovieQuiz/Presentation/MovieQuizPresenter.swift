@@ -150,7 +150,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
                 let alertPresenter = alertPresenter,
                 let viewController = viewController
                 else { return }
-            alertPresenter.show(viewController: viewController, with: resultQuiz)
+            alertPresenter.showAlertWithResult(viewController: viewController, with: resultQuiz)
         } else {
             switchToNextQuestion()
             questionFactory?.requestNextQuestion()

@@ -13,7 +13,7 @@ final class AlertPresenter: AlertPresenterProtocol {
     weak var delegate: AlertPresenterDelegate?
     
     // Метод отображения Алерты с результатами Квиза, полученными от делегата и уведомления Контролера о событии
-    func show(viewController: UIViewController, with result: AlertModel?) {
+    func showAlertWithResult(viewController: UIViewController, with result: AlertModel?) {
         guard let result else { return }
         let alert = UIAlertController(
             title: result.title,
