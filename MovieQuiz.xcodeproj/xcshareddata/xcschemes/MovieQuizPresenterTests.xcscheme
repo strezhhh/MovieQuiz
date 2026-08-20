@@ -11,22 +11,17 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-         <TestPlanReference
-            reference = "container:MovieQuizUITests.xctestplan"
-            default = "YES">
-         </TestPlanReference>
-      </TestPlans>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
       <Testables>
          <TestableReference
             skipped = "NO"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9B0145E302FD4C400764947"
-               BuildableName = "MovieQuizUITests.xctest"
-               BlueprintName = "MovieQuizUITests"
+               BlueprintIdentifier = "A9B014D53037998B00764947"
+               BuildableName = "MovieQuizPresenterTests.xctest"
+               BlueprintName = "MovieQuizPresenterTests"
                ReferencedContainer = "container:MovieQuiz.xcodeproj">
             </BuildableReference>
          </TestableReference>

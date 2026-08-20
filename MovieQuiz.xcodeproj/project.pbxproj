@@ -88,6 +88,7 @@
 		A9B014823036043D00764947 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
 		A9B014BD3037221A00764947 /* MovieQuizViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizViewControllerProtocol.swift; sourceTree = "<group>"; };
 		A9B014D63037998B00764947 /* MovieQuizPresenterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieQuizPresenterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9B014ED3037B0E100764947 /* MovieQuizUITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = MovieQuizUITests.xctestplan; sourceTree = "<group>"; };
 		A9DB0481301E6CF000F88E1D /* FontsCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsCustom.swift; sourceTree = "<group>"; };
 		A9DB0483301E6ED100F88E1D /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
 		A9FAD72C3028F054005E5F26 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 		AD1ABAA52831907B00B3E448 = {
 			isa = PBXGroup;
 			children = (
+				A9B014ED3037B0E100764947 /* MovieQuizUITests.xctestplan */,
 				A9B01454302F903E00764947 /* MovieQuiz.xctestplan */,
 				AD1ABAB02831907B00B3E448 /* MovieQuiz */,
 				A9B0144C302F825C00764947 /* MovieQuizTests */,

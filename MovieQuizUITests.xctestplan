@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "F7B18FD1-AF37-48D1-A9DF-F3D4853F79A2",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "A9B0145E302FD4C400764947",
+        "name" : "MovieQuizUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

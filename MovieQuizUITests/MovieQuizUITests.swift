@@ -33,9 +33,7 @@ final class MovieQuizUITests: XCTestCase {
         sleep(3)
         let firstPoster = app.images["Poster"]
         let firstPosterData = firstPoster.screenshot().pngRepresentation
-        // XCTAssertTrue(firstPoster.exists) // это лишнее, так как мы проверяем побайтово два скрина
         sleep(10)
-        // вот тут отключал интернет и тест проходил без ошибок
         app.buttons["Yes"].tap()
         sleep(3)
         let secondPoster = app.images["Poster"]
