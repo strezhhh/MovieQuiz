@@ -14,7 +14,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - IBActions
-        
+    
     // Метод вызывается когда юзер нажимает кнопку "Да"
     @IBAction private func didTapYesButton(_ sender: Any) {
         presenter.didTapYesButton()
@@ -26,7 +26,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     // MARK: - Properties
-        
+    
     // Переменная хранит Презентер
     private let presenter = MovieQuizPresenter()
     
