@@ -10,9 +10,6 @@ import XCTest
 
 final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
     
-    var lastStepModel: QuizStepViewModel?
-
-    
     func show(quiz step: QuizStepViewModel) {
         
     }
@@ -46,7 +43,7 @@ final class MovieQuizPresenterTests: XCTestCase {
         let question = QuizQuestion(imageData: emptyData, text: "Question Text", correctAnswer: true)
         let viewModel = sut.convert(model: question)
         
-        XCTAssertEqual(viewControllerMock.lastStepModel?.imageData, emptyData)
+        XCTAssertEqual(viewModel.imageData, emptyData)
         XCTAssertEqual(viewModel.question, "Question Text")
         XCTAssertEqual(viewModel.questionNumber, "1/10")
     }
