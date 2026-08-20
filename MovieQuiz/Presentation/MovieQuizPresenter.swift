@@ -102,10 +102,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         viewController?.show(quiz: self.convert(model: currentQuestion))
     }
     
-    // MARK: - Methods
+    // MARK: - Private Methods
     
     // Метод формирования сообщения об ошибке получения данных по сети
-    func showNetworkError(title: String, message: String) {
+    private func showNetworkError(title: String, message: String) {
         viewController?.hideLoadingIndicator()
         
         networkError = AlertModel (
@@ -127,7 +127,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // Метод отображения корректности ответа
-    func proceedWithAnswer(isCorrect: Bool) {
+    private func proceedWithAnswer(isCorrect: Bool) {
         if isCorrect {
             increaseCorrectAnswers()
         }
@@ -146,7 +146,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // Метод либо ведет на экран результатов либо на следующий вопрос
-    func proceedToNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
         if self.isLastQuestions() {
             updateStatistic()
             guard let statisticService = self.statisticService else { return }
@@ -182,6 +182,51 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
             questionFactory?.requestNextQuestion()
         }
     }
+        
+    // Метод сравнивает полученный от пользователя ответ с правильным
+    private func didAnswer (guess: Bool) {
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        self.proceedWithAnswer(isCorrect: guess == currentQuestion.correctAnswer)
+    }
+    
+    // Метод проверяет является ли текущий вопрос последним
+    private func isLastQuestions() -> Bool {
+        currentQuestionIndex == questionsAmount - 1
+    }
+    
+    // Метод сбрасывает индекс вопросов на 0
+    private func resetQuestionIndex() {
+        currentQuestionIndex = 0
+    }
+    
+    // Метод увеличивает индекс вопросов на 1
+    private func switchToNextQuestion() {
+        currentQuestionIndex += 1
+    }
+    
+    // Метод увеличивает количесво правильных ответов на 1
+    private func increaseCorrectAnswers() {
+        correctAnswers += 1
+    }
+    
+    // Метод сбрасывает количество правильных ответов на 0
+    private func resetCorrectAnswers() {
+        correctAnswers = 0
+    }
+    
+    // Метод конвертации из структуры вопроса во вью модель
+    private func convert(model: QuizQuestion) -> QuizStepViewModel {
+        QuizStepViewModel(
+            // image: UIImage(data: model.imageData) ?? UIImage(), // старый код
+            imageData: model.imageData, // рефакторинг
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)" // надо добавить эти две переменные
+        )
+    }
+    
+    // MARK: - Methods
     
     // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -205,49 +250,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // Метод вызывается когда юзер нажимает кнопку "Нет"
     func didTapNoButton() {
         didAnswer (guess: false)
-    }
-    
-    // Метод сравнивает полученный от пользователя ответ с правильным
-    private func didAnswer (guess: Bool) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        self.proceedWithAnswer(isCorrect: guess == currentQuestion.correctAnswer)
-    }
-    
-    // Метод проверяет является ли текущий вопрос последним
-    func isLastQuestions() -> Bool {
-        currentQuestionIndex == questionsAmount - 1
-    }
-    
-    // Метод сбрасывает индекс вопросов на 0
-    func resetQuestionIndex() {
-        currentQuestionIndex = 0
-    }
-    
-    // Метод увеличивает индекс вопросов на 1
-    func switchToNextQuestion() {
-        currentQuestionIndex += 1
-    }
-    
-    // Метод увеличивает количесво правильных ответов на 1
-    func increaseCorrectAnswers() {
-        correctAnswers += 1
-    }
-    
-    // Метод сбрасывает количество правильных ответов на 0
-    func resetCorrectAnswers() {
-        correctAnswers = 0
-    }
-    
-    // Метод конвертации из структуры вопроса во вью модель
-    func convert(model: QuizQuestion) -> QuizStepViewModel {
-        QuizStepViewModel(
-            // image: UIImage(data: model.imageData) ?? UIImage(), // старый код
-            imageData: model.imageData, // рефакторинг
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)" // надо добавить эти две переменные
-        )
     }
     
 }
