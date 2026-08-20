@@ -61,14 +61,14 @@ final class MovieQuizViewController: UIViewController {
         questionLabel.text = step.question
     }
     
-    // Метод показывает обводку. Вызывается в методе showAnswerResult()
+    // Метод показывает обводку
     func showBorder(answer: Bool) {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 8
         previewImageView.layer.borderColor = answer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
     
-    // Метод скрывает обводку. Вызывается в методе showNextQuestionOrResults()
+    // Метод скрывает обводку
     func hideBorder() {
         previewImageView.layer.masksToBounds = true
         previewImageView.layer.borderWidth = 0
