@@ -11,6 +11,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // MARK: - Properties
     
+    // Переменная хранящая модель для Network error
+    private var networkError: AlertModel?
+    
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     var alertPresenter: AlertPresenterProtocol?
     
@@ -48,12 +51,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // Метод сообщит о получении ошибки с сервера
     func didFailToLoadData(with error: Error) {
-        viewController?.showNetworkError(title: "Ошибка!", message: error.localizedDescription)
+        self.showNetworkError(title: "Ошибка!", message: error.localizedDescription)
     }
     
     // Метод сообщит, что пользователь не увидел изображение
     func didFailToLoadImage() {
-        viewController?.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
+        self.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
     }
     
     // MARK: - AlertPresenterDelegate
@@ -100,6 +103,28 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // MARK: - Methods
+    
+    // Метод формирования сообщения об ошибке получения данных по сети
+    func showNetworkError(title: String, message: String) {
+        viewController?.hideLoadingIndicator()
+        
+        networkError = AlertModel (
+            title: title,
+            message: message,
+            buttonText: "Попробовать еще раз",
+            completion: { [weak self] in
+                guard let self else { return }
+                self.questionFactory?.loadData()
+                viewController?.showLoadingIndicator()
+            }
+        )
+        
+        guard
+            let alertPresenter = self.alertPresenter,
+            let viewController = self.viewController
+            else { return }
+        alertPresenter.show(viewController: viewController, with: networkError)
+    }
     
     // Метод отображения корректности ответа
     func proceedWithAnswer(isCorrect: Bool) {

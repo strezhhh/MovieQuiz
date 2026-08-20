@@ -27,8 +27,8 @@ final class MovieQuizViewController: UIViewController {
     
     // MARK: - Properties
     
-    // Переменная хранящая модель для Network error
-    private var networkError: AlertModel?
+//    // Переменная хранящая модель для Network error
+//    private var networkError: AlertModel?
     
     // Переменная хранит загрузчик данных по сети
     private var moviesLoader: MoviesLoader?
@@ -101,24 +101,24 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
-    // Метод формирования сообщения об ошибке получения данных по сети
-    func showNetworkError(title: String, message: String) {
-        hideLoadingIndicator()
-        
-        networkError = AlertModel (
-            title: title,
-            message: message,
-            buttonText: "Попробовать еще раз",
-            completion: { [weak self] in
-                guard let self else { return }
-                presenter.questionFactory?.loadData()
-                self.showLoadingIndicator()
-            }
-        )
-        
-        guard let alertPresenter = presenter.alertPresenter else { return }
-        alertPresenter.show(viewController: self, with: networkError)
-    }
+//    // Метод формирования сообщения об ошибке получения данных по сети
+//    func showNetworkError(title: String, message: String) {
+//        hideLoadingIndicator()
+//        
+//        networkError = AlertModel (
+//            title: title,
+//            message: message,
+//            buttonText: "Попробовать еще раз",
+//            completion: { [weak self] in
+//                guard let self else { return }
+//                presenter.questionFactory?.loadData()
+//                self.showLoadingIndicator()
+//            }
+//        )
+//        
+//        guard let alertPresenter = presenter.alertPresenter else { return }
+//        alertPresenter.show(viewController: self, with: networkError)
+//    }
     
 }
 
