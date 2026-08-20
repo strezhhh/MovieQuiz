@@ -20,7 +20,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // Переменная хранящая статистику квизов
     private var statisticService: StatisticServiceProtocol?
     
-    // Фабрика вопросов в которую будет обращаться Контролер
+    // Фабрика вопросов в которую будет обращаться MovieQuizPresenter
     var questionFactory: QuestionFactoryProtocol?
     
     // Переменная с количеством верных ответов
@@ -43,26 +43,25 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // MARK: - QuestionFactoryDelegate
     
-    // Метод сообщит о получении данных с сервера
+    // Метод вызовут когда загрузяться данных с сервера
     func didLoadDataFromServer() {
         viewController?.hideLoadingIndicator()
         questionFactory?.requestNextQuestion()
     }
     
-    // Метод сообщит о получении ошибки с сервера
+    // Метод вызовут если получат ошибку с сервера
     func didFailToLoadData(with error: Error) {
-        self.showNetworkError(title: "Ошибка!", message: error.localizedDescription)
+        self.reportNetworkError(title: "Ошибка!", message: error.localizedDescription)
     }
     
-    // Метод сообщит, что пользователь не увидел изображение
+    // Метод вызовут если пользователь не увидел изображение
     func didFailToLoadImage() {
-        self.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
+        self.reportNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
     }
     
     // MARK: - AlertPresenterDelegate
     
-    // Метод, который вызовет AlertPresenter, чтобы сообщить, что Алерта показана
-    // и юзер нажал кнопку "Сыграть еще раз"
+    // Метод вызовут если юзер нажал кнопку "Сыграть еще раз" на Алерте
     func restartGame() {
         resetQuestionIndex()
         resetCorrectAnswers()
@@ -105,7 +104,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // MARK: - Private Methods
     
     // Метод формирования сообщения об ошибке получения данных по сети
-    private func showNetworkError(title: String, message: String) {
+    private func reportNetworkError(title: String, message: String) {
         viewController?.hideLoadingIndicator()
         
         networkError = AlertModel (
