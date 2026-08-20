@@ -124,13 +124,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         if self.isLastQuestions() {
             updateStatistic()
             guard let statisticService = self.statisticService else { return }
-            // Меняем формат даты под нужный формат dd.MM.yy HH:mm
-            let dateFormatter: DateFormatter = {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "dd.MM.yy HH:mm"
-                return formatter
-            }()
-            
+            let dateFormatter = DateFormatter.defaultDateTime
             resultQuiz = AlertModel (
                 title: "Этот раунд окончен!",
                 message: """
