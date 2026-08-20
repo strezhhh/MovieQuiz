@@ -191,12 +191,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // Метод конвертации из структуры вопроса во вью модель
-    /*private */func convert(model: QuizQuestion) -> QuizStepViewModel {
+    func convert(model: QuizQuestion) -> QuizStepViewModel {
         QuizStepViewModel(
-            // image: UIImage(data: model.imageData) ?? UIImage(), // старый код
-            imageData: model.imageData, // рефакторинг
+            imageData: model.imageData,
             question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)" // надо добавить эти две переменные
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
         )
     }
     
