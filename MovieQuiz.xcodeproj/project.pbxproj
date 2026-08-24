@@ -26,6 +26,7 @@
 		A9B01458302FB77F00764947 /* NetworkRoutingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B01457302FB77F00764947 /* NetworkRoutingProtocol.swift */; };
 		A9B014833036043D00764947 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B014823036043D00764947 /* MovieQuizPresenter.swift */; };
 		A9B014BE3037221A00764947 /* MovieQuizViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B014BD3037221A00764947 /* MovieQuizViewControllerProtocol.swift */; };
+		A9B014EF303CA8A500764947 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A9B014EE303CA8A500764947 /* Localizable.xcstrings */; };
 		A9DB0482301E6CF000F88E1D /* FontsCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB0481301E6CF000F88E1D /* FontsCustom.swift */; };
 		A9DB0484301E6ED100F88E1D /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB0483301E6ED100F88E1D /* UISettings.swift */; };
 		A9FAD72D3028F054005E5F26 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FAD72C3028F054005E5F26 /* NetworkClient.swift */; };
@@ -89,6 +90,7 @@
 		A9B014BD3037221A00764947 /* MovieQuizViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizViewControllerProtocol.swift; sourceTree = "<group>"; };
 		A9B014D63037998B00764947 /* MovieQuizPresenterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieQuizPresenterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B014ED3037B0E100764947 /* MovieQuizUITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = MovieQuizUITests.xctestplan; sourceTree = "<group>"; };
+		A9B014EE303CA8A500764947 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A9DB0481301E6CF000F88E1D /* FontsCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsCustom.swift; sourceTree = "<group>"; };
 		A9DB0483301E6ED100F88E1D /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
 		A9FAD72C3028F054005E5F26 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				AD1ABABC2831907F00B3E448 /* LaunchScreen.storyboard */,
 				AD1ABABA2831907F00B3E448 /* Assets.xcassets */,
 				AD1ABABF2831907F00B3E448 /* Info.plist */,
+				A9B014EE303CA8A500764947 /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = AD1ABAA52831907B00B3E448;
 			packageReferences = (
@@ -427,6 +431,7 @@
 			files = (
 				A91727C72FF68CCD00AECFA7 /* YS Display-Bold.ttf in Resources */,
 				A91727C82FF68CCD00AECFA7 /* YS Display-Medium.ttf in Resources */,
+				A9B014EF303CA8A500764947 /* Localizable.xcstrings in Resources */,
 				AD1ABABE2831907F00B3E448 /* LaunchScreen.storyboard in Resources */,
 				AD1ABABB2831907F00B3E448 /* Assets.xcassets in Resources */,
 				AD1ABAB92831907B00B3E448 /* Main.storyboard in Resources */,
@@ -740,6 +745,7 @@
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -796,6 +802,7 @@
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
