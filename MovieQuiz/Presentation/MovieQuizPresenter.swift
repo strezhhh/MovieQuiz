@@ -14,11 +14,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // Алерта, куда Контролер передаст данные с результатами Квиза.
     var alertPresenter: AlertPresenterProtocol?
     
-    // Переменная хранящая статистику квизов
-    private var statisticService: StatisticServiceProtocol?
-    
     // Фабрика вопросов в которую будет обращаться MovieQuizPresenter
     var questionFactory: QuestionFactoryProtocol?
+    
+    // MARK: - Private Properties
+    
+    // Переменная хранящая статистику квизов
+    private var statisticService: StatisticServiceProtocol?
     
     // Переменная с количеством верных ответов
     private var correctAnswers: Int = 0
@@ -38,9 +40,18 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // Вопрос который видит пользователь
     private var currentQuestion: QuizQuestion?
     
-    // MARK: - QuestionFactoryDelegate
+    // MARK: - Init Method
     
-    // Метод вызовут когда загрузяться данных с сервера
+    // Метод вызовет инициализацию необходимых сущностей
+    init() {
+        setupAlertPresenter()
+        setupStatisticService()
+        setupQuestionFactory()
+    }
+    
+    // MARK: - QuestionFactoryDelegate Methods
+    
+    // Метод вызовут когда загрузятся данных с сервера
     func didLoadDataFromServer() {
         viewController?.hideLoadingIndicator()
         questionFactory?.requestNextQuestion()
@@ -56,7 +67,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         viewController?.showNetworkError(title: NSLocalizedString("errorLoadImageTitle", comment: ""), message: NSLocalizedString("errorLoadImageMessage", comment: ""))
     }
     
-    // MARK: - AlertPresenterDelegate
+    // MARK: - AlertPresenterDelegate Methods
     
     // Метод вызовут если юзер нажал кнопку "Сыграть еще раз" на Алерте
     func restartGame() {
@@ -67,13 +78,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
     // MARK: - Private Initialization Methods
-    
-    // Метод вызовет инициализацию необходимых сущностей
-    init() {
-        setupAlertPresenter()
-        setupStatisticService()
-        setupQuestionFactory()
-    }
     
     // Метод инициализации переменной alertPresenter() и установки делегата в AlertPresenter()
     private func setupAlertPresenter() {
@@ -96,6 +100,41 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         questionFactory.loadData()
         guard let currentQuestion = self.currentQuestion else {return}
         viewController?.show(quiz: self.convert(model: currentQuestion))
+    }
+    
+    // MARK: - Methods
+    
+    // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        guard let question else {
+            return
+        }
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+            self?.viewController?.setButtonsIsEnabled(to: true)
+            self?.viewController?.hideBorder()
+        }
+    }
+    
+    // Метод вызывается когда юзер нажимает кнопку "Да"
+    func didTapYesButton() {
+        didAnswer (guess: true)
+    }
+    
+    // Метод вызывается когда юзер нажимает кнопку "Нет"
+    func didTapNoButton() {
+        didAnswer (guess: false)
+    }
+    
+    // Метод конвертации из структуры вопроса во вью модель
+    func convert(model: QuizQuestion) -> QuizStepViewModel {
+        QuizStepViewModel(
+            imageData: model.imageData,
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
+        )
     }
     
     // MARK: - Private Methods
@@ -182,41 +221,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     // Метод сбрасывает количество правильных ответов на 0
     private func resetCorrectAnswers() {
         correctAnswers = 0
-    }
-    
-    // Метод конвертации из структуры вопроса во вью модель
-    func convert(model: QuizQuestion) -> QuizStepViewModel {
-        QuizStepViewModel(
-            imageData: model.imageData,
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
-        )
-    }
-    
-    // MARK: - Methods
-    
-    // Метод, который вызовет Фабрика, чтобы показать готовый вопрос
-    func didReceiveNextQuestion(question: QuizQuestion?) {
-        guard let question else {
-            return
-        }
-        currentQuestion = question
-        let viewModel = convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.viewController?.show(quiz: viewModel)
-            self?.viewController?.setButtonsIsEnabled(to: true)
-            self?.viewController?.hideBorder()
-        }
-    }
-    
-    // Метод вызывается когда юзер нажимает кнопку "Да"
-    func didTapYesButton() {
-        didAnswer (guess: true)
-    }
-    
-    // Метод вызывается когда юзер нажимает кнопку "Нет"
-    func didTapNoButton() {
-        didAnswer (guess: false)
     }
     
 }
