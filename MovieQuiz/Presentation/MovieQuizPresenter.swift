@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate {
+final class MovieQuizPresenter {
     
     // MARK: - Properties
     
@@ -47,34 +47,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
         setupAlertPresenter()
         setupStatisticService()
         setupQuestionFactory()
-    }
-    
-    // MARK: - QuestionFactoryDelegate Methods
-    
-    // Метод вызовут когда загрузятся данных с сервера
-    func didLoadDataFromServer() {
-        viewController?.hideLoadingIndicator()
-        questionFactory?.requestNextQuestion()
-    }
-    
-    // Метод вызовут если получат ошибку с сервера
-    func didFailToLoadData(with error: Error) {
-        viewController?.showNetworkError(title: NSLocalizedString("errorLoadDataTitle", comment: ""), message: error.localizedDescription)
-    }
-    
-    // Метод вызовут если пользователь не увидел изображение
-    func didFailToLoadImage() {
-        viewController?.showNetworkError(title: NSLocalizedString("errorLoadImageTitle", comment: ""), message: NSLocalizedString("errorLoadImageMessage", comment: ""))
-    }
-    
-    // MARK: - AlertPresenterDelegate Methods
-    
-    // Метод вызовут если юзер нажал кнопку "Сыграть еще раз" на Алерте
-    func restartGame() {
-        resetQuestionIndex()
-        resetCorrectAnswers()
-        questionFactory?.requestNextQuestion()
-        viewController?.hideBorder()
     }
     
     // MARK: - Private Initialization Methods
@@ -224,3 +196,38 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     }
     
 }
+
+// MARK: - QuestionFactoryDelegate
+
+extension MovieQuizPresenter: QuestionFactoryDelegate {
+    
+    // Метод вызовут когда загрузятся данных с сервера
+    func didLoadDataFromServer() {
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+    
+    // Метод вызовут если получат ошибку с сервера
+    func didFailToLoadData(with error: Error) {
+        viewController?.showNetworkError(title: NSLocalizedString("errorLoadDataTitle", comment: ""), message: error.localizedDescription)
+    }
+    
+    // Метод вызовут если пользователь не увидел изображение
+    func didFailToLoadImage() {
+        viewController?.showNetworkError(title: NSLocalizedString("errorLoadImageTitle", comment: ""), message: NSLocalizedString("errorLoadImageMessage", comment: ""))
+    }
+}
+
+// MARK: - AlertPresenterDelegate
+
+extension MovieQuizPresenter: AlertPresenterDelegate {
+    
+    // Метод вызовут если юзер нажал кнопку "Сыграть еще раз" на Алерте
+    func restartGame() {
+        resetQuestionIndex()
+        resetCorrectAnswers()
+        questionFactory?.requestNextQuestion()
+        viewController?.hideBorder()
+    }
+}
+
