@@ -8,7 +8,7 @@
 import XCTest
 @testable import MovieQuiz
 
-class ArrayTests: XCTestCase {
+final class ArrayTests: XCTestCase {
     func testGetValueInRange() throws {
         // Given
         let array = [1, 1, 2, 3, 4]
@@ -19,7 +19,7 @@ class ArrayTests: XCTestCase {
         XCTAssertEqual(value, 2)
     }
     
-    func testGetValueOutRange() throws {
+    private func testGetValueOutRange() throws {
         // Given
         let array = [1, 1, 2, 3, 4]
         // When
