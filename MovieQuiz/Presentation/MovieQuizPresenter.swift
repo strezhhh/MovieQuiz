@@ -48,12 +48,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
     
     // Метод вызовут если получат ошибку с сервера
     func didFailToLoadData(with error: Error) {
-        viewController?.showNetworkError(title: "Ошибка!", message: error.localizedDescription)
+        viewController?.showNetworkError(title: NSLocalizedString("errorLoadDataTitle", comment: ""), message: error.localizedDescription)
     }
     
     // Метод вызовут если пользователь не увидел изображение
     func didFailToLoadImage() {
-        viewController?.showNetworkError(title: "Упс, постер не загрузился!", message: "В следующий раз точно загрузится!")
+        viewController?.showNetworkError(title: NSLocalizedString("errorLoadImageTitle", comment: ""), message: NSLocalizedString("errorLoadImageMessage", comment: ""))
     }
     
     // MARK: - AlertPresenterDelegate
@@ -126,14 +126,14 @@ final class MovieQuizPresenter: QuestionFactoryDelegate, AlertPresenterDelegate 
             guard let statisticService = self.statisticService else { return }
             let dateFormatter = DateFormatter.defaultDateTime
             resultQuiz = AlertModel (
-                title: "Этот раунд окончен!",
+                title: NSLocalizedString("resultQuizTitle", comment: ""),
                 message: """
-                    Ваш результат: \(self.correctAnswers)/\(self.questionsAmount)
-                    Количество сыгранных квизов: \(statisticService.gamesCount)
-                    Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: statisticService.bestGame.date)))
-                    Средняя точность: \(statisticService.totalAccuracy)%
+                    \(NSLocalizedString("resultQuizMessageResult", comment: "")) \(self.correctAnswers)/\(self.questionsAmount)
+                    \(NSLocalizedString("resultQuizMessgeCount", comment: "")) \(statisticService.gamesCount)
+                    \(NSLocalizedString("resultQuizMessageRecord", comment: "")) \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(dateFormatter.string(from: statisticService.bestGame.date)))
+                    \(NSLocalizedString("resultQuizMessageAccuracy", comment: "")) \(statisticService.totalAccuracy)%
                     """,
-                buttonText: "Сыграть еще раз",
+                buttonText: NSLocalizedString("resultQuizButtonText", comment: ""),
                 completion: { [weak self] in
                     guard let self else { return }
                     self.restartGame()

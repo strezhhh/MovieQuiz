@@ -116,7 +116,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
             let rating = Float(movie.rating ?? "0") ?? 0
             
             let rank = Int.random(in: (7...9))
-            let text = "Рейтинг этого фильма больше чем \(rank)?"
+            let text = "\(NSLocalizedString("textQuestion", comment: "")) \(rank)?"
             let correctAnswer = rating > Float(rank)
             
             let question = QuizQuestion(

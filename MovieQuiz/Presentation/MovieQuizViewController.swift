@@ -50,6 +50,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         questionLabel.font = Fonts.ysDisplayBold23
         questionTitleLabel.font = Fonts.ysDisplayMedium20
         questionTitleLabel.text = SetUI.tittleLabelText
+        questionTitleLabel.text = NSLocalizedString("questionTitleLabelText", comment: "")
         indexLabel.font = Fonts.ysDisplayMedium20
         previewImageView.layer.cornerRadius = CGFloat(SetUI.imageViewCornerRadius)
         activityIndicator.hidesWhenStopped = true
@@ -104,7 +105,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         networkError = AlertModel (
             title: title,
             message: message,
-            buttonText: "Попробовать еще раз",
+            buttonText: NSLocalizedString("networkErrorButtonText", comment: ""),
             completion: { [weak self] in
                 guard let self else { return }
                 presenter.questionFactory?.loadData()

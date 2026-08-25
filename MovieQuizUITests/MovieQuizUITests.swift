@@ -18,7 +18,7 @@ final class MovieQuizUITests: XCTestCase {
         app = XCUIApplication()
         continueAfterFailure = false
         
-        app.launch() // Вот этой строчки кода нет в теории, пришлось спросить ии-ку
+        app.launch()
         
     }
     
@@ -38,7 +38,6 @@ final class MovieQuizUITests: XCTestCase {
         sleep(3)
         let secondPoster = app.images["Poster"]
         let secondPosterData = secondPoster.screenshot().pngRepresentation
-        //XCTAssertTrue(secondPoster.exists)
         let indexLabel = app.staticTexts["Index"]
         
         XCTAssertEqual(indexLabel.label, "2/10")
