@@ -8,7 +8,7 @@
 import Foundation
 
 /// Отвечает за загрузку данных по URL
-struct NetworkClient {
+struct NetworkClient: NetworkRoutingProtocol {
     
     // MARK: - Private Enumeration
     private enum NetworkError: Error {
@@ -17,7 +17,6 @@ struct NetworkClient {
     
     // MARK: - Methods
     // Функция запроса по заданному URL с API IMDb. Тип GET
-    // Функция отдает результат асинхронно через handler
     // Метод инициируется MoviesLoader'ом
     func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
         

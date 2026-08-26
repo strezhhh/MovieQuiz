@@ -98,7 +98,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
                 // Проверяем, что данные это картинка
                 guard UIImage(data: imageData) != nil else {
-                    print("Данные не картинка")
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
                         self.delegate?.didFailToLoadImage()
@@ -106,7 +105,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
                     return
                 }
             } catch {
-                print("нет данных")
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     logger.error("Failed to load image", metadata: ["error": "\(error)"])
@@ -118,7 +116,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
             let rating = Float(movie.rating ?? "0") ?? 0
             
             let rank = Int.random(in: (7...9))
-            let text = "Рейтинг этого фильма больше чем \(rank)?"
+            let text = "\(NSLocalizedString("textQuestion", comment: "")) \(rank)?"
             let correctAnswer = rating > Float(rank)
             
             let question = QuizQuestion(

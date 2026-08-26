@@ -11,7 +11,7 @@ import UIKit
 protocol AlertPresenterProtocol {
     
     // Метод вызова Алерты
-    func show(viewController: UIViewController, with result: AlertModel?)
+    func showAlertWithResult(viewController: MovieQuizViewControllerProtocol, with result: AlertModel?)
     
     // Метод инициализации делегата
     func didSetDelegate(_ delegate: AlertPresenterDelegate?)

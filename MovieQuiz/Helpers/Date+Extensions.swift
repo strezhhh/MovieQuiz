@@ -4,10 +4,10 @@ extension Date {
     var dateTimeString: String { DateFormatter.defaultDateTime.string(from: self) }
 }
 
-private extension DateFormatter {
+extension DateFormatter {
     static let defaultDateTime: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YY hh:mm"
+        dateFormatter.dateFormat = "dd.MM.YY HH:mm"
         return dateFormatter
     }()
 }
